@@ -1,0 +1,31 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  text-decoration: none;
+  list-style: none;
+
+}
+
+html {
+  font-size: 62.5%;  
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  /* 1rem = 10px  10px/16px = 62.5% */
+}
+
+
+  
+
+body {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  padding: 3rem;
+  background-image: linear-gradient(to right bottom,rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)),url(./assets/garage-bg.jpg);
+  background-size: cover;
+  background-position: 0% 55%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}

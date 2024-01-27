@@ -7,7 +7,6 @@ function ClientList() {
 
   return (
     <div>
-      <h2>Client List</h2>
       <ul>
         {filterdClients && filterdClients.length > 0 ? (
           filterdClients.map((client) => <ClientItem key={client.id} client={client} />)

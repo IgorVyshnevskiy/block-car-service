@@ -1,7 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { useNavigate, useParams } from 'react-router-dom';
+import UserContext from '../../context/userContext';
 
-function SessionItem({ details, clientId }) {
+function SessionItem({ details }) {
+  const { clientId } = useParams();
+  const { setSessionEdit } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -14,8 +18,21 @@ function SessionItem({ details, clientId }) {
         <p>Session ID: {details.id}</p>
         <p>Date: {details.date}</p>
         <p>Purpose: {details.purpose}</p>
-        <p>Total Price: {details.fullPrice}</p>
+        <p>mileage: {details.sessionMileage}</p>
+        <p>Total Price: {details.totalPrice}</p>
       </div>
+        <button
+          onClick={() =>
+            setSessionEdit({
+              clientId,
+              session: details,
+              edit: true,
+            })
+          }
+          className='edit'
+        >
+          <FaEdit color='black' />
+        </button>
     </li>
   );
 }

@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/userContext';
+import Button from '../Button/Button';
+import css from './ClientItem.module.css';
 
 function ClientItem({ client }) {
   const { deleteClient, editClient } = useContext(UserContext);
@@ -11,22 +13,43 @@ function ClientItem({ client }) {
     navigate(`/clients/${client.id}`);
   };
 
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Prevent the event from bubbling up
+  };
+
   return (
-    <li key={client.id}>
-      <div onClick={handleNavigate}>
-        <strong>{client.owner}</strong>
-        <p>Phone: {client.phone}</p>
-        <p>Car: {client.car}</p>
-        <p>Mileage: {client.mileage} km</p>
+    <li key={client.id} className={css.clientListItem} onClick={handleNavigate}>
+      <div>
+        <h3 className={css.clientName}>{client.owner}</h3>
+        <div className={css.clientWrapper}>
+          <p><span className={css.textColor}>Phone:</span>{client.phone}</p>
+          <p><span className={css.textColor}>Car:</span>{client.car}</p>
+          <p><span className={css.textColor}>Mileage:</span>{client.mileage} km</p>
+        </div>
       </div>
-      <button onClick={() => deleteClient(client.id)} className='close'>
-        <FaTimes color='red' />
-      </button>
-      <button onClick={() => editClient(client)} className='edit'>
-        <FaEdit color='black' />
-      </button>
+      <div className={css.ClientBtnWrapper}>
+        <Button
+          onClick={(e) => { handleButtonClick(e); editClient(client); }}
+          label={
+            <>
+              Edit
+              <FaEdit color='black' style={{ marginLeft: '4px' }} />
+            </>
+          }
+          styleName={'editBtn'}
+        />
+        <Button
+          onClick={(e) => { handleButtonClick(e); deleteClient(client.id); }}
+          label={
+            <>
+              Delete <FaTimes color='black' style={{ marginLeft: '4px' }} />
+            </>
+          }
+          styleName={'deleteBtn'}
+        />
+      </div>
     </li>
   );
 }
 
-export default ClientItem
+export default ClientItem;

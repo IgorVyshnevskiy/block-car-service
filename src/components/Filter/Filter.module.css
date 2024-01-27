@@ -1,0 +1,51 @@
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 50%;
+}
+
+.filterLabel {
+  font-size: 1.5rem;
+  color: #ccc;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+.searchIcon {
+  font-size: 2rem;
+  color: rgb(61,61,61);
+  position: absolute;
+  left: 10px;
+}
+
+.filterInput {
+  font-size: 1.8rem;
+  font-family: inherit;
+  color: rgb(31, 31, 31);
+  padding: 1.5rem 2rem 1.5rem 4rem;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-bottom: 3px solid transparent;
+  width: 100%;
+  display: block;
+  transition: all 0.3s;
+}
+
+.filterInput:focus {
+  outline: none;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid orange;
+}
+
+.filterInput::-webkit-input-placeholder {
+  color: rgb(61,61,61);
+}

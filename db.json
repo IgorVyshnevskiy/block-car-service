@@ -2,15 +2,15 @@
   "clients": [
     {
       "owner": "Igor Vyshnevskyi",
-      "phone": 555,
+      "phone": 2222,
       "car": "hyundai i30 2010",
-      "mileage": 241000,
-      "id": 1,
+      "mileage": 2422211,
       "sessions": [
         {
           "id": 1,
-          "date": "2022-01-20T15:30:00.000Z",
-          "purpose": "i want to repair my car 1",
+          "date": "2024-10-10",
+          "purpose": "i want to my car 2",
+          "sessionMileage": 2345,
           "totalPrice": 100.55,
           "details": [
             {
@@ -47,68 +47,96 @@
         },
         {
           "id": 2,
-          "date": "2022-01-20T15:30:00.000Z",
+          "date": "2024-10-10",
           "purpose": "i want to repair my car 2",
-          "fullPrice": 200.55,
+          "sessionMileage": 200000,
+          "totalPrice": 200.55,
           "details": [
             {
               "id": 1,
               "detail": "motor",
               "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "medium",
+              "finished": false
             },
             {
               "id": 2,
               "detail": "turbine",
               "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "hard",
+              "finished": false
             },
             {
               "id": 3,
               "detail": "wheels",
               "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "easy",
+              "finished": false
             }
           ]
         },
         {
           "id": 3,
-          "date": "2022-01-20T15:30:00.000Z",
+          "date": "2024-10-10",
           "purpose": "i want to repair my car 3",
-          "fullPrice": 300.55,
+          "sessionMileage": 200000,
+          "totalPrice": 300.55,
           "details": [
             {
               "id": 1,
               "detail": "motor",
               "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "medium",
+              "finished": false
             },
             {
               "id": 2,
               "detail": "turbine",
               "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "hard",
+              "finished": false
+            },
+            {
+              "id": 3,
+              "detail": "wheels",
+              "description": "you need to fix your motor",
+              "mechPrice": 50.55,
+              "detailPrice": 150,
+              "totalPrice": 100.55,
+              "labelWork": "easy",
+              "finished": false
             }
           ]
         }
-      ]
+      ],
+      "id": 1
     },
     {
       "owner": "jonh smith",
-      "phone": "0505005050",
+      "phone": 222,
       "car": "ravon china 2021",
       "mileage": 400000,
-      "id": 2,
       "sessions": [
         {
           "id": 1,
-          "date": "2022-01-20T15:30:00.000Z",
+          "date": "2024-10-10",
           "purpose": "i want to repair my car 1",
+          "sessionMileage": 200000,
           "mechPrice": 50.55,
           "detailPrice": 150,
           "fullPrice": 100.55,
@@ -138,8 +166,9 @@
         },
         {
           "id": 2,
-          "date": "2022-01-20T15:30:00.000Z",
+          "date": "2024-10-10",
           "purpose": "i want to repair my car 2",
+          "sessionMileage": 200000,
           "mechPrice": 50.55,
           "detailPrice": 150,
           "fullPrice": 200.55,
@@ -169,8 +198,9 @@
         },
         {
           "id": 3,
-          "date": "2022-01-20T15:30:00.000Z",
+          "date": "2024-10-10",
           "purpose": "i want to repair my car 3",
+          "sessionMileage": 200000,
           "mechPrice": 50.55,
           "detailPrice": 150,
           "fullPrice": 300.55,
@@ -191,7 +221,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 2
     },
     {
       "id": 3,

@@ -1,0 +1,68 @@
+.formContainer {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.formGroup {
+  position: relative;
+  
+
+}
+.formGroup:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.formTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.formContainer {
+  border-top: 1px solid #da9b68;
+  border-bottom: 1px solid #da9b68;
+  padding: 2.5rem 0;
+}
+
+.inputField {
+  font-size: 1.8rem;
+  font-family: inherit;
+  color: rgb(31, 31, 31);
+  padding: 1.5rem 2rem;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-bottom: 3px solid transparent;
+  width: 100%;
+  display: block;
+  transition: all 0.3s;
+}
+
+.inputField:focus {
+  outline: none;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid orange;
+}
+
+.inputField::-webkit-input-placeholder {
+  color: rgb(62, 62, 62);
+}
+
+.labelField {
+  font-size: 1.5rem;
+  color: #da9b68;
+  font-weight: 700;
+  margin-left: 2rem;
+  margin-top: 0.7rem;
+  display: block;
+  transition: all 0.3s;
+
+}
+
+.inputField:placeholder-shown + .labelField {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4rem);
+}
