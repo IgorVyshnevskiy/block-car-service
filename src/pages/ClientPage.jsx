@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import SessionList from '../components/SessionList';
 import SessionAddForm from '../components/SessionAddForm';
+import PageCard from '../components/PageCard';
 
 function ClientPage() {
   const { clientId } = useParams();
@@ -30,13 +31,13 @@ function ClientPage() {
 
   return (
     <div>
+      <PageCard>
       <Header title={'Client List'} />
       {client ? (
         <div>
           <h2>
             {client.owner}'s {client.car} Details
           </h2>
-          <p>ID: {client.id}</p>
           <p>Phone: {client.phone}</p>
           <p>Mileage: {client.mileage}</p>
           <h3>Sessions:</h3>
@@ -46,6 +47,7 @@ function ClientPage() {
       ) : (
         <p>Loading...</p>
       )}
+      </PageCard>
     </div>
   );
 }

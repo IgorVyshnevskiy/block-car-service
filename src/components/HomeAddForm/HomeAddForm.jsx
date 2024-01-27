@@ -27,13 +27,13 @@ function HomeAddForm() {
         setOwner(value);
         break;
       case 'phoneField':
-        setPhone(Number(value));
+        setPhone(value);
         break;
       case 'carField':
         setCar(value);
         break;
       case 'mileageField':
-        setMileage(Number(value));
+        setMileage(value);
         break;
       default:
         return;

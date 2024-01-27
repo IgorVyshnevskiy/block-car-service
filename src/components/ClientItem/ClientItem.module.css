@@ -1,11 +1,17 @@
 .clientListItem {
   width: 100%;
   background-color: rgba(61, 61, 61, 0.5);
+  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15);
   padding: 2rem;
   border-radius: 15px;
   border: 2px solid #5b3f2d;
   font-size: 1.8rem;
   cursor: pointer;
+  transition: transform .3s;
+}
+
+.clientListItem:hover {
+  transform: translateY(-1rem) scale(1.02);
 }
 
 .clientListItem:not(:last-child) {
