@@ -2,15 +2,15 @@
   "clients": [
     {
       "owner": "Igor Vyshnevskyi",
-      "phone": 22222,
+      "phone": "2222",
       "car": "hyundai i30 2010",
-      "mileage": 2422211,
+      "mileage": "2222422",
       "sessions": [
         {
           "id": 1,
-          "date": "2024-10-10",
-          "purpose": "i want to my car 2",
-          "sessionMileage": 2345,
+          "date": "2021-10-10",
+          "purpose": "i want to my car 2222",
+          "sessionMileage": 23456777,
           "totalPrice": 100.55,
           "details": [
             {
@@ -49,7 +49,7 @@
           "id": 2,
           "date": "2024-10-10",
           "purpose": "i want to repair my car 2",
-          "sessionMileage": 200000,
+          "sessionMileage": 22222,
           "totalPrice": 200.55,
           "details": [
             {
@@ -88,7 +88,7 @@
           "id": 3,
           "date": "2024-10-10",
           "purpose": "i want to repair my car 3",
-          "sessionMileage": 200000,
+          "sessionMileage": 33333,
           "totalPrice": 300.55,
           "details": [
             {
@@ -128,7 +128,7 @@
     },
     {
       "owner": "jonh smith",
-      "phone": 222,
+      "phone": "222222",
       "car": "ravon china 2021",
       "mileage": 400000,
       "sessions": [
@@ -260,36 +260,6 @@
       "phone": "0505005050",
       "car": "smart car 2022",
       "mileage": 11000,
-      "details": [
-        {
-          "id": 1,
-          "detail": "motor",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 2,
-          "detail": "turbine",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 3,
-          "detail": "wheels",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        }
-      ]
-    },
-    {
-      "owner": "some dude",
-      "phone": "0505005050",
-      "car": "tesla s 2023",
-      "mileage": 5455,
-      "id": 5,
       "details": [
         {
           "id": 1,

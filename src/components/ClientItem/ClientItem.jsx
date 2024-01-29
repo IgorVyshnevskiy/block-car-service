@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FaEdit, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/userContext';
 import Button from '../Button/Button';
@@ -14,7 +14,7 @@ function ClientItem({ client }) {
   };
 
   const handleButtonClick = (e) => {
-    e.stopPropagation(); // Prevent the event from bubbling up
+    e.stopPropagation();
   };
 
   return (
@@ -42,7 +42,7 @@ function ClientItem({ client }) {
           onClick={(e) => { handleButtonClick(e); deleteClient(client.id); }}
           label={
             <>
-              Delete <FaTimes color='black' style={{ marginLeft: '4px' }} />
+              Delete <FaTrash color='black' style={{ marginLeft: '4px' }} />
             </>
           }
           styleName={'deleteBtn'}

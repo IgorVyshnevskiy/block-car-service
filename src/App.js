@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import { CarServiceProvider } from './context/userContext';
@@ -12,6 +14,7 @@ function App() {
         <Route path='/clients/:clientId' element={<ClientPage />} />
         <Route path='/clients/:clientId/details/:detailId' element={<DetailPage />} />
       </Routes>
+      <ToastContainer />
     </CarServiceProvider>
   );
 }

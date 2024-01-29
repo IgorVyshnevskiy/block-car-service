@@ -33,8 +33,6 @@ button:active {
 
 
 .deleteBtn {
-  justify-content: center;
-  align-items: center;
   background-color: #ff3d3d;
   
 }

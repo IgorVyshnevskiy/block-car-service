@@ -58,7 +58,7 @@ function HomeAddForm() {
       sessions: clientEdit.edit ? clientEdit.client.sessions : [],
     };
 
-    console.log(newClient);
+    // console.log(newClient);
 
     if (clientEdit.edit === true) {
       updateClients(clientEdit.client.id, newClient);
