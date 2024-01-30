@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
-import SessionList from '../components/SessionList';
-import SessionAddForm from '../components/SessionAddForm';
+import SessionList from '../components/PageLists/SessionList';
+import SessionAddForm from '../components/PageForms/SessionAddForm';
 import PageCard from '../components/PageCard';
-import Filter from '../components/Filter';
+import Filter from '../components/Filters/Filter';
+import SessionFilter from '../components/Filters/SessionFilter';
 
 function ClientPage() {
   const { clientId } = useParams();
@@ -43,8 +44,8 @@ function ClientPage() {
           <p>Mileage: {client.mileage}</p>
           <h3>Sessions:</h3>
           <SessionAddForm sessionFn={fetchClientDetails}/>
-          <Filter/>
-          <SessionList sessions={client} fetchClientDetails={fetchClientDetails} />
+          <SessionFilter/>
+          <SessionList sessions={client} fetchClientDetails={fetchClientDetails} clientId={clientId} />
         </div>
       ) : (
         <p>Loading...</p>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
-import DetailsList from '../DetailsList/DetailsList';
+import DetailsList from '../components/PageLists/DetailsList/DetailsList';
 
 function DetailPage() {
   const { clientId, detailId } = useParams();

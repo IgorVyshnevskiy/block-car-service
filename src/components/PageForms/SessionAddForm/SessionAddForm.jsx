@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import UserContext from '../../context/userContext';
+import UserContext from '../../../context/userContext';
 import { useParams } from 'react-router-dom';
 import css from './../HomeAddForm/FormStyles.module.css';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 
 function SessionAddForm({ sessionFn }) {
   const { clientId } = useParams();

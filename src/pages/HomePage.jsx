@@ -1,7 +1,7 @@
-import ClientList from "../components/ClientList"
-import Filter from "../components/Filter"
+import ClientList from "../components/PageLists/ClientList"
+import Filter from "../components/Filters/Filter"
 import Header from "../components/Header"
-import HomeAddForm from "../components/HomeAddForm"
+import HomeAddForm from "../components/PageForms/HomeAddForm"
 import PageCard from "../components/PageCard"
 
 function HomePage() {

@@ -23,9 +23,10 @@ const updateNotificationStyles = {
 };
 export const CarServiceProvider = ({ children }) => {
   const [filter, setFilter] = useState('');
-
+  const [sessionFilter, setSessionFilter] = useState('');
+  
   const [clients, setClients] = useState([]);
-
+  
   const [isLoading, setIsLoading] = useState(true);
   const [clientEdit, setClientEdit] = useState({
     clients: {},
@@ -165,6 +166,17 @@ export const CarServiceProvider = ({ children }) => {
         edit: false,
       });
       callback();
+      toast.warning(`Session updated`, {
+        style: updateNotificationStyles,
+        icon: <FaRegEdit />,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        
+      });
       return data;
     } catch (error) {
       console.error(error);
@@ -264,7 +276,6 @@ const deleteSession = async (clientId, sessionId, callback) => {
       progress: undefined,
     });
 
-    // Invoke the callback to trigger UI update
     callback();
 
     return data;
@@ -287,6 +298,10 @@ const deleteSession = async (clientId, sessionId, callback) => {
     const { value } = e.target;
     setFilter(value);
   };
+  const changeSessionFilter = (e) => {
+    const { value } = e.target;
+    setSessionFilter(value);
+  };
 
   const filterUsers = () => {
     const normalizedFilter = filter.toLowerCase();
@@ -296,6 +311,40 @@ const deleteSession = async (clientId, sessionId, callback) => {
   };
   const filterdClients = filterUsers();
 
+  const filterSessions = (clientId) => {
+    const normalizedFilter = sessionFilter.toLowerCase();
+    if (!clientId) {
+      return [];
+    }
+
+    const client = clients.find((c) => c.id === Number(clientId));
+
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      return [];
+    }
+
+    const filteredSessions = (client.sessions || []).filter((session) =>
+      session.purpose.toLowerCase().includes(normalizedFilter)
+    );
+
+    return filteredSessions;
+  };
+
+  
+
+
+  // const filterSessions = () => {
+  //   const normalizedFilter = sessionFilter.toLowerCase();
+  //   return clients.sessions.filter((session) =>
+  //     session.purpose.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
+  // const filterdSessions = filterSessions();
+  
+
+
+
   return (
     <UserContext.Provider
       value={{
@@ -303,9 +352,11 @@ const deleteSession = async (clientId, sessionId, callback) => {
         clientEdit,
         isLoading,
         filterdClients,
+        filterSessions,
         sessionEdit,
         setSessionEdit,
         changeFilter,
+        changeSessionFilter,
         addClient,
         deleteClient,
         fetchClients,

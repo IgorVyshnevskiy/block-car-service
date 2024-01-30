@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
-import UserContext from '../../context/userContext';
-import Button from '../Button/Button';
+import UserContext from '../../../context/userContext';
+import Button from '../../Button/Button';
 import css from './SessionItem.module.css';
 
 function SessionItem({ details, fetchClientDetails }) {

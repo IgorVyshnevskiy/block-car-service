@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../../context/userContext';
-import Button from '../Button/Button';
+import UserContext from '../../../context/userContext';
+import Button from '../../Button/Button';
 import css from './ClientItem.module.css';
 
 function ClientItem({ client }) {

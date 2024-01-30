@@ -1,4 +1,4 @@
-import DetailItem from "../DetailItem";
+import DetailItem from "./../../PageListItems/DetailItem";
 
 
 function DetailList({ details }) {

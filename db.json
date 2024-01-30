@@ -9,7 +9,7 @@
         {
           "id": 1,
           "date": "2021-10-10",
-          "purpose": "i want to my car 2222222",
+          "purpose": "repair car 1",
           "sessionMileage": 23456,
           "totalPrice": 100.55,
           "details": [
@@ -48,7 +48,7 @@
         {
           "id": 2,
           "date": "2024-10-10",
-          "purpose": "i want to repair my car 2",
+          "purpose": "delete car 2",
           "sessionMileage": 22222,
           "totalPrice": 200.55,
           "details": [
@@ -122,6 +122,12 @@
               "finished": false
             }
           ]
+        },
+        {
+          "id": "QRfWTROxkpCE0FeK0KMli",
+          "date": "2024-01-12",
+          "purpose": "do something car 4",
+          "sessionMileage": 1223
         }
       ],
       "id": 1

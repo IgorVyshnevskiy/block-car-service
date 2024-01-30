@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import ClientItem from '../ClientItem';
-import UserContext from '../../context/userContext';
+import ClientItem from '../../PageListItems/ClientItem';
+import UserContext from '../../../context/userContext';
 
 function ClientList() {
   const { filterdClients } = useContext(UserContext);
