@@ -46,27 +46,31 @@ function SessionAddForm({ sessionFn }) {
     setSessionMileage('');
   };
 
-  const submitSession = async (e) => {
-    e.preventDefault();
+  // Inside SessionAddForm.js
+const submitSession = async (e) => {
+  e.preventDefault();
 
-    const newSession = {
-      date,
-      purpose,
-      sessionMileage,
-    };
-
-    if (sessionEdit.edit) {
-      await updateSessions(
-        clientId,
-        { ...sessionEdit.session, ...newSession },
-        sessionFn
-      );
-    } else {
-      await addSession(clientId, newSession);
-    }
-
-    reset();
+  const newSession = {
+    date,
+    purpose,
+    sessionMileage,
   };
+
+  if (sessionEdit.edit) {
+    await updateSessions(
+      clientId,
+      { ...sessionEdit.session, ...newSession },
+      sessionFn
+    );
+  } else {
+    await addSession(clientId, newSession);
+    // Trigger the sessionFn callback to update the UI
+    sessionFn();
+  }
+
+  reset();
+};
+
 
   return (
     <form className={css.formContainer} onSubmit={submitSession}>

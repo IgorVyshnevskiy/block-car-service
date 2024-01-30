@@ -5,7 +5,7 @@ import UserContext from '../../context/userContext';
 import Button from '../Button/Button';
 import css from './SessionItem.module.css';
 
-function SessionItem({ details }) {
+function SessionItem({ details, fetchClientDetails }) {
   const { clientId } = useParams();
   const { setSessionEdit, deleteSession } = useContext(UserContext);
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function SessionItem({ details }) {
 
   const handleDeleteClick = (e) => {
     e.stopPropagation();
-    deleteSession(clientId, details.id);
+    deleteSession(clientId, details.id, fetchClientDetails);
   };
 
   return (

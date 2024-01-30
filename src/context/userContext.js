@@ -226,51 +226,54 @@ export const CarServiceProvider = ({ children }) => {
     }
   };
   
-  
-  
-  
 
-  const deleteSession = async (clientId, sessionId) => {
-    try {
-      const client = clients.find((c) => c.id === Number(clientId));
-  
-      const updatedSessions = client.sessions.filter((session) => session.id !== sessionId);
-  
-      const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...client, sessions: updatedSessions }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to delete session');
-      }
-  
-      const data = await response.json();
-  
-      setClients((prevClients) =>
-        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
-      );
-  
-      toast.error(`Session deleted`, {
-        style: deleteNotificationStyles,
-        icon: <FaTrash />,
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-  
-      return data;
-    } catch (error) {
-      console.error(error);
-      throw error;
+const deleteSession = async (clientId, sessionId, callback) => {
+  try {
+    const client = clients.find((c) => c.id === Number(clientId));
+
+    const updatedSessions = client.sessions.filter(
+      (session) => session.id !== sessionId
+    );
+
+    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...client, sessions: updatedSessions }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete session');
     }
-  };
+
+    const data = await response.json();
+
+    setClients((prevClients) =>
+      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+    );
+
+    toast.error(`Session deleted`, {
+      style: deleteNotificationStyles,
+      icon: <FaTrash />,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    // Invoke the callback to trigger UI update
+    callback();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
   
 
   const editClient = (client) => {
