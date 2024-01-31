@@ -1,8 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import UserContext from '../../../context/userContext';
 import { useParams } from 'react-router-dom';
 import css from './../HomeAddForm/FormStyles.module.css';
 import Button from '../../Button/Button';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/confetti.css'; 
+
 
 function SessionAddForm({ sessionFn }) {
   const { clientId } = useParams();
@@ -11,22 +15,38 @@ function SessionAddForm({ sessionFn }) {
   const [purpose, setPurpose] = useState('');
   const [sessionMileage, setSessionMileage] = useState('');
 
+  const datePickerRef = useRef(null);
+
   useEffect(() => {
     if (sessionEdit.edit) {
       setDate(sessionEdit?.session.date);
       setPurpose(sessionEdit?.session.purpose);
       setSessionMileage(sessionEdit?.session.sessionMileage);
     }
-  }, [sessionEdit]);
+
+
+    const flatpickrInstance = flatpickr(datePickerRef.current, {
+      dateFormat: 'Y-m-d',
+      defaultDate: date,
+      onChange: (selectedDates) => {
+        setDate(selectedDates[0]);
+      },
+      theme: 'confetti',
+    });
+  
+
+    return () => {
+      if (flatpickrInstance) {
+        flatpickrInstance.destroy();
+      }
+    };
+  }, [sessionEdit, date]);
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
       case 'purposeField':
         setPurpose(value);
-        break;
-      case 'dateField':
-        setDate(value);
         break;
       case 'sessionMileageField':
         setSessionMileage(Number(value));
@@ -42,41 +62,36 @@ function SessionAddForm({ sessionFn }) {
     setSessionMileage('');
   };
 
-const submitSession = async (e) => {
-  e.preventDefault();
+  const submitSession = async (e) => {
+    e.preventDefault();
 
-  const newSession = {
-    date,
-    purpose,
-    sessionMileage,
+    const newSession = {
+      date,
+      purpose,
+      sessionMileage,
+    };
+
+    if (sessionEdit.edit) {
+      await updateSessions(clientId, { ...sessionEdit.session, ...newSession }, sessionFn);
+    } else {
+      await addSession(clientId, newSession);
+      sessionFn();
+    }
+
+    reset();
   };
-
-  if (sessionEdit.edit) {
-    await updateSessions(
-      clientId,
-      { ...sessionEdit.session, ...newSession },
-      sessionFn
-    );
-  } else {
-    await addSession(clientId, newSession);
-    sessionFn();
-  }
-
-  reset();
-};
-
 
   return (
     <form className={css.formContainer} onSubmit={submitSession}>
       <h2 className={css.formTitle}>Add Session</h2>
       <div className={css.formGroup}>
         <input
-          style={{marginBottom: '4rem'}}
+          style={{ marginBottom: '4rem' }}
           className={css.inputField}
-          type='date'
+          type='text'
           name='dateField'
-          value={date}
-          onChange={onHandleChange}
+          placeholder='Date'
+          ref={datePickerRef}
         />
       </div>
       <div className={css.formGroup}>
@@ -86,24 +101,24 @@ const submitSession = async (e) => {
           name='purposeField'
           value={purpose}
           placeholder='purpose'
-          onChange={onHandleChange}
           autoComplete="off"
+          onChange={onHandleChange}
         />
         <label className={css.labelField}>Purpose</label>
       </div>
       <div className={css.formGroup}>
         <input
-        className={css.inputField}
+          className={css.inputField}
           type='text'
           name='sessionMileageField'
           value={sessionMileage}
           placeholder='cars mileage'
-          onChange={onHandleChange}
           autoComplete="off"
+          onChange={onHandleChange}
         />
         <label className={css.labelField}>User Mileage</label>
       </div>
-      <Button type='Submit' label={'Submit'} styleName={'submitBtn'}/>
+      <Button type='Submit' label={'Submit'} styleName={'submitBtn'} />
     </form>
   );
 }

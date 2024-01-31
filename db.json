@@ -122,24 +122,6 @@
               "finished": false
             }
           ]
-        },
-        {
-          "id": "QRfWTROxkpCE0FeK0KMli",
-          "date": "2024-01-12",
-          "purpose": "do something car 4",
-          "sessionMileage": 1223
-        },
-        {
-          "id": "eYmj__PPC-L4HnE3jPyK2",
-          "date": "2024-01-31",
-          "purpose": "просто нехуй робити",
-          "sessionMileage": 500000
-        },
-        {
-          "id": "pb_3AXqCQX7mcBLazpK37",
-          "date": "4444-04-04",
-          "purpose": "",
-          "sessionMileage": ""
         }
       ],
       "id": 1
@@ -269,6 +251,14 @@
           "description": "you need to fix your motor",
           "price": 44.95,
           "totalPrice": 44.95
+        }
+      ],
+      "sessions": [
+        {
+          "id": "sJ8L157OPzubTSusjCcWO",
+          "date": "2024-02-13T22:00:00.000Z",
+          "purpose": "i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22",
+          "sessionMileage": 565965969
         }
       ]
     },

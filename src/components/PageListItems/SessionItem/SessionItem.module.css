@@ -12,6 +12,14 @@
 
 .sessionWrapper {
   display: flex;
+  margin-bottom: 1rem;
+}
+
+.infoBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .clientListItem:hover {
@@ -44,6 +52,19 @@
   color: #a77247;
   font-weight: bold;
   margin-right: 8px;
+}
+
+.purpose {
+  margin-bottom: 1rem;
+}
+
+.infoBlockFlex {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.infoBlockFlex > p:first-child {
+  margin-right: 2.5rem;
 }
 
 

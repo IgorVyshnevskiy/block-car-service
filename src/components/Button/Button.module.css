@@ -26,18 +26,25 @@ button:active {
 
 .editBtn {
   background-color: #45624e;
-  margin-right: 12px;
+  margin-right: 1.2rem;
    
 }
-
-
 
 .deleteBtn {
   background-color: #ff3d3d;
   
 }
 
-
+.excelBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3c7c50;
+  /* color: white; */
+  margin-right: 1.2rem;
+  padding: 5px 14px;
+  
+}
 
 .submitBtn {
   background-color: #a77247;
