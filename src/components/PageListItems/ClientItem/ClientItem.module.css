@@ -32,7 +32,7 @@
 }
 
 .clientWrapper p {
-  width: 33%;
+  flex-grow: 1;
   color: #ccc;
 }
 

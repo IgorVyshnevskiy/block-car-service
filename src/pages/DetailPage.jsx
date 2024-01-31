@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import DetailsList from '../components/PageLists/DetailsList/DetailsList';
+import PageCard from '../components/PageCard';
+import GoBackBtn from '../components/GoBackBtn/GoBackBtn';
 
 function DetailPage() {
   const { clientId, detailId } = useParams();
   const [detail, setDetail] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClientDetails = async () => {
@@ -15,8 +20,6 @@ function DetailPage() {
           throw new Error('Failed to fetch client details');
         }
         const data = await response.json();
-
-        // Assuming "sessions" is an array within the client object
         const session = data.sessions.find((session) => session.id === Number(detailId));
 
         if (!session) {
@@ -29,12 +32,20 @@ function DetailPage() {
       }
     };
 
+
+
     fetchClientDetails();
   }, [clientId, detailId]);
 
+  const GoBack = () => {
+    navigate(location.state?.from || `/clients/${clientId}`);
+  };
+
   return (
-    <div>
+    <PageCard>
       <Header title={'Detail List'} />
+
+      <GoBackBtn onclickHandler={GoBack}/>
       {detail ? (
         <div>
           <DetailsList details={detail}/>
@@ -42,7 +53,7 @@ function DetailPage() {
       ) : (
         <p>Loading...</p>
       )}
-    </div>
+    </PageCard>
   );
 }
 

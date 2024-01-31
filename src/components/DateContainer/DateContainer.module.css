@@ -1,0 +1,27 @@
+.dateWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid #da9b68;
+  background-color: #2a2a2a;
+  color: #da9b68;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2.5rem;
+}
+
+.dateMonth {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.dateYear {
+  font-size: 1.75rem;
+}
+
+.dateDay {
+  font-size: 1.5rem;
+  font-weight: bold;
+}

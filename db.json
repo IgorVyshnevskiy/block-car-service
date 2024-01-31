@@ -128,6 +128,18 @@
           "date": "2024-01-12",
           "purpose": "do something car 4",
           "sessionMileage": 1223
+        },
+        {
+          "id": "eYmj__PPC-L4HnE3jPyK2",
+          "date": "2024-01-31",
+          "purpose": "просто нехуй робити",
+          "sessionMileage": 500000
+        },
+        {
+          "id": "pb_3AXqCQX7mcBLazpK37",
+          "date": "4444-04-04",
+          "purpose": "",
+          "sessionMileage": ""
         }
       ],
       "id": 1
@@ -288,7 +300,23 @@
           "price": 44.95,
           "totalPrice": 44.95
         }
+      ],
+      "sessions": [
+        {
+          "id": "z0B5JNCzMmRp9RAtDliy6",
+          "date": "2024-01-17",
+          "purpose": "car wash",
+          "sessionMileage": 1111111
+        }
       ]
+    },
+    {
+      "owner": "Ігор  Теребонька",
+      "phone": "0508477076",
+      "car": "ХУндай",
+      "mileage": "22000",
+      "sessions": [],
+      "id": 5
     }
   ]
 }

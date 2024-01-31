@@ -1,0 +1,29 @@
+.backButton {
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid #a77247;
+  padding: 1rem;
+  box-shadow: 0, 1rem 2rem, rgba(0, 0, 0, .5);
+  background-color: rgba(31, 31, 31, .4);
+}
+
+.arrowBtn {
+  font-size: 2.5rem;
+  color: #a77247;
+}
+
+.backButton:hover, .backButton:active
+{
+  background-color: #a77247;
+}
+
+.backButton:hover > .arrowBtn, .backButton:active > .arrowBtn
+{
+  color: #000;
+}
+
+
+
+

@@ -29,4 +29,5 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: white;
+  letter-spacing: 0.05em;
 }

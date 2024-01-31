@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import SessionList from '../components/PageLists/SessionList';
 import SessionAddForm from '../components/PageForms/SessionAddForm';
 import PageCard from '../components/PageCard';
-import Filter from '../components/Filters/Filter';
 import SessionFilter from '../components/Filters/SessionFilter';
+import css from './clientPage.module.css';
+import GoBackBtn from '../components/GoBackBtn/GoBackBtn';
 
 function ClientPage() {
   const { clientId } = useParams();
   const [client, setClient] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const fetchClientDetails = async () => {
     try {
@@ -23,35 +27,47 @@ function ClientPage() {
       console.error(error);
     }
   };
-  
-  
-  
+
   useEffect(() => {
     fetchClientDetails();
-  },[clientId]);
-  
+  }, [clientId]);
 
+  const GoBack = () => {
+    navigate(location.state?.from || '/');
+  };
   return (
-    <div>
-      <PageCard>
+    <PageCard>
       <Header title={'Client List'} />
+      <GoBackBtn onclickHandler={GoBack}/>
       {client ? (
         <div>
-          <h2>
-            {client.owner}'s {client.car} Details
-          </h2>
-          <p>Phone: {client.phone}</p>
-          <p>Mileage: {client.mileage}</p>
-          <h3>Sessions:</h3>
-          <SessionAddForm sessionFn={fetchClientDetails}/>
-          <SessionFilter/>
-          <SessionList sessions={client} fetchClientDetails={fetchClientDetails} clientId={clientId} />
+          <div className={css.clientDetailsBlock}>
+            <h2 className={css.clientName}>
+              {client.owner}'s {client.car} Details
+            </h2>
+            <div className={css.detailFlex}>
+              <p className={css.detailBlockparagraph}>
+                <span className={css.detailBlockparagraphColor}>Phone:</span>{' '}
+                {client.phone}
+              </p>
+              <p className={css.detailBlockparagraph}>
+                <span className={css.detailBlockparagraphColor}>Mileage:</span>{' '}
+                {client.mileage}
+              </p>
+            </div>
+          </div>
+          <SessionAddForm sessionFn={fetchClientDetails} />
+          <SessionFilter />
+          <SessionList
+            sessions={client}
+            fetchClientDetails={fetchClientDetails}
+            clientId={clientId}
+          />
         </div>
       ) : (
         <p>Loading...</p>
       )}
-      </PageCard>
-    </div>
+    </PageCard>
   );
 }
 

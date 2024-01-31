@@ -19,10 +19,6 @@ function SessionAddForm({ sessionFn }) {
     }
   }, [sessionEdit]);
 
-  // useEffect(() => {
-  //   sessionFn();
-  // }, [sessionFn]);
-
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -46,7 +42,6 @@ function SessionAddForm({ sessionFn }) {
     setSessionMileage('');
   };
 
-  // Inside SessionAddForm.js
 const submitSession = async (e) => {
   e.preventDefault();
 
@@ -64,7 +59,6 @@ const submitSession = async (e) => {
     );
   } else {
     await addSession(clientId, newSession);
-    // Trigger the sessionFn callback to update the UI
     sessionFn();
   }
 
@@ -77,6 +71,7 @@ const submitSession = async (e) => {
       <h2 className={css.formTitle}>Add Session</h2>
       <div className={css.formGroup}>
         <input
+          style={{marginBottom: '4rem'}}
           className={css.inputField}
           type='date'
           name='dateField'
@@ -92,6 +87,7 @@ const submitSession = async (e) => {
           value={purpose}
           placeholder='purpose'
           onChange={onHandleChange}
+          autoComplete="off"
         />
         <label className={css.labelField}>Purpose</label>
       </div>
@@ -103,6 +99,7 @@ const submitSession = async (e) => {
           value={sessionMileage}
           placeholder='cars mileage'
           onChange={onHandleChange}
+          autoComplete="off"
         />
         <label className={css.labelField}>User Mileage</label>
       </div>

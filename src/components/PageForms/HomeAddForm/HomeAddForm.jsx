@@ -83,6 +83,7 @@ function HomeAddForm() {
             value={owner}
             placeholder='User Name'
             onChange={onHandleChange}
+            autoComplete="off"
           />
           <label htmlFor='ownerField' className={css.labelField}>
             User Name
@@ -96,6 +97,7 @@ function HomeAddForm() {
             value={phone}
             placeholder='phone'
             onChange={onHandleChange}
+            autoComplete="off"
           />
           <label htmlFor='phoneField' className={css.labelField}>User Phone</label>
         </div>
@@ -107,6 +109,7 @@ function HomeAddForm() {
             value={car}
             placeholder='User car'
             onChange={onHandleChange}
+            autoComplete="off"
           />
           <label htmlFor='carField' className={css.labelField}>User Car</label>
         </div>
@@ -118,6 +121,7 @@ function HomeAddForm() {
             value={mileage}
             placeholder='mileage'
             onChange={onHandleChange}
+            autoComplete="off"
           />
           <label htmlFor='mileageField' className={css.labelField}>User Mileage</label>
         </div>

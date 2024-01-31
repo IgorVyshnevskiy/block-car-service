@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import UserContext from '../../../context/userContext';
 import Button from '../../Button/Button';
 import css from './SessionItem.module.css';
+import DateContainer from '../../DateContainer/DateContainer';
 
 function SessionItem({ details, fetchClientDetails }) {
   const { clientId } = useParams();
@@ -34,12 +35,13 @@ function SessionItem({ details, fetchClientDetails }) {
       onClick={handleNavigate}
       className={css.clientListItem}
     >
-      <div>
-        <p>Session ID: {details.id}</p>
-        <p>Date: {details.date}</p>
+      <div className={css.sessionWrapper}>
+        <DateContainer date={details.date} />
+        <div className={css.infoBlock}>
         <p>Purpose: {details.purpose}</p>
         <p>Mileage: {details.sessionMileage}</p>
         <p>Total Price: {details.totalPrice}</p>
+        </div>
       </div>
       <div className={css.ClientBtnWrapper}>
         <Button
