@@ -1,11 +1,15 @@
-
 import React from 'react';
-import css from './DateContainer.module.css'
+import css from './DateContainer.module.css';
 
 const DateContainer = ({ date }) => {
   const formattedDate = new Date(date);
-  const month = formattedDate.toLocaleString('en-US', { month: 'long' });
-  const day = formattedDate.toLocaleString('en-US', { day: '2-digit' });
+  const monthNames = [
+    'січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
+    'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'
+  ];
+
+  const month = monthNames[formattedDate.getMonth()];
+  const day = formattedDate.toLocaleString('uk-UA', { day: '2-digit' });
   const year = formattedDate.getFullYear();
 
   return (

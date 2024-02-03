@@ -5,6 +5,7 @@ import UserContext from '../../../context/userContext';
 import Button from '../../Button/Button';
 import css from './ClientItem.module.css';
 
+
 function ClientItem({ client }) {
   const { deleteClient, editClient } = useContext(UserContext);
   const navigate = useNavigate();

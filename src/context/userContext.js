@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaTrash, FaRegEdit, FaRegCheckCircle } from 'react-icons/fa';
 import { nanoid } from 'nanoid';
+import { animateScroll as scroll } from 'react-scroll';
 
 const UserContext = createContext();
 
@@ -285,9 +286,74 @@ const deleteSession = async (clientId, sessionId, callback) => {
   }
 };
 
-  
+const deleteReport = async (clientId, sessionId, reportId, callback) => {
+  try {
+    const client = clients.find((c) => c.id === Number(clientId));
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      return;
+    }
+
+    const session = client.sessions.find((s) => s.id === Number(sessionId));
+    if (!session) {
+      console.error(`Session with ID ${sessionId} not found`);
+      return;
+    }
+
+    const updatedReports = session.reports.filter(
+      (report) => report.id !== reportId
+    );
+
+    const updatedSession = { ...session, reports: updatedReports };
+    const updatedClientSessions = client.sessions.map((s) =>
+      s.id === Number(sessionId) ? updatedSession : s
+    );
+
+    const updatedClient = { ...client, sessions: updatedClientSessions };
+
+    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedClient),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete report');
+    }
+
+    const data = await response.json();
+    setClients((prevClients) =>
+      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+    );
+
+    toast.error(`Report deleted`, {
+      style: deleteNotificationStyles,
+      icon: <FaTrash />,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    callback();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+
+const scrollDuration = 500;
 
   const editClient = (client) => {
+    scroll.scrollToTop({
+      duration: scrollDuration
+    });
     setClientEdit({
       client,
       edit: true,
@@ -331,20 +397,6 @@ const deleteSession = async (clientId, sessionId, callback) => {
     return filteredSessions;
   };
 
-  
-
-
-  // const filterSessions = () => {
-  //   const normalizedFilter = sessionFilter.toLowerCase();
-  //   return clients.sessions.filter((session) =>
-  //     session.purpose.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
-  // const filterdSessions = filterSessions();
-  
-
-
-
   return (
     <UserContext.Provider
       value={{
@@ -361,6 +413,7 @@ const deleteSession = async (clientId, sessionId, callback) => {
         deleteClient,
         fetchClients,
         updateClients,
+        deleteReport,
         editClient,
         updateSessions,
         addSession,

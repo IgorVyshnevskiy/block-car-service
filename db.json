@@ -9,39 +9,44 @@
         {
           "id": 1,
           "date": "2021-10-10",
-          "purpose": "repair car 1",
+          "purpose": "amer-motionnpm install framer-motionnpm install framer-motionnpm install framer-motionnpm install framer-motion",
           "sessionMileage": 23456,
           "totalPrice": 100.55,
           "details": [
             {
               "id": 1,
               "detail": "motor",
-              "description": "you need to fix your motor",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "medium",
-              "finished": false
+              "detailPrice": 150
             },
             {
               "id": 2,
               "detail": "turbine",
-              "description": "you need to fix your motor",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "hard",
-              "finished": false
+              "detailPrice": 150
             },
             {
               "id": 3,
-              "detail": "wheels",
-              "description": "you need to fix your motor",
+              "detail": "window",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "easy",
-              "finished": false
+              "detailPrice": 150
+            }
+          ],
+          "reports": [
+            {
+              "id": 1,
+              "report": "you need to fix your window",
+              "labelWork": "easy"
+            },
+            {
+              "id": 2,
+              "report": "you need to fix your window",
+              "labelWork": "hard"
+            },
+            {
+              "id": 3,
+              "report": "you need to fix your window",
+              "labelWork": "medium"
             }
           ]
         },
@@ -55,73 +60,45 @@
             {
               "id": 1,
               "detail": "motor",
-              "description": "you need to fix your motor",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "medium",
-              "finished": false
+              "detailPrice": 150
             },
             {
               "id": 2,
               "detail": "turbine",
-              "description": "you need to fix your motor",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "hard",
-              "finished": false
+              "detailPrice": 150
             },
             {
               "id": 3,
-              "detail": "wheels",
-              "description": "you need to fix your motor",
+              "detail": "window",
               "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "easy",
-              "finished": false
+              "detailPrice": 150
+            }
+          ],
+          "reports": [
+            {
+              "id": 1,
+              "report": "you need to fix your window",
+              "labelWork": "easy"
+            },
+            {
+              "id": 2,
+              "report": "you need to fix your window",
+              "labelWork": "hard"
+            },
+            {
+              "id": 3,
+              "report": "you need to fix your window",
+              "labelWork": "medium"
             }
           ]
         },
         {
-          "id": 3,
-          "date": "2024-10-10",
-          "purpose": "i want to repair my car 3",
-          "sessionMileage": 33333,
-          "totalPrice": 300.55,
-          "details": [
-            {
-              "id": 1,
-              "detail": "motor",
-              "description": "you need to fix your motor",
-              "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "medium",
-              "finished": false
-            },
-            {
-              "id": 2,
-              "detail": "turbine",
-              "description": "you need to fix your motor",
-              "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "hard",
-              "finished": false
-            },
-            {
-              "id": 3,
-              "detail": "wheels",
-              "description": "you need to fix your motor",
-              "mechPrice": 50.55,
-              "detailPrice": 150,
-              "totalPrice": 100.55,
-              "labelWork": "easy",
-              "finished": false
-            }
-          ]
+          "id": "-2h_7XP3jIAGQA3edd44y",
+          "date": "2024-02-08T22:00:00.000Z",
+          "purpose": "car car car",
+          "sessionMileage": 12345
         }
       ],
       "id": 1
@@ -259,6 +236,12 @@
           "date": "2024-02-13T22:00:00.000Z",
           "purpose": "i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22",
           "sessionMileage": 565965969
+        },
+        {
+          "id": "-FoKqpg8UHpXKOPvwf2Hm",
+          "date": "2024-02-07T22:00:00.000Z",
+          "purpose": "qwert",
+          "sessionMileage": 123
         }
       ]
     },

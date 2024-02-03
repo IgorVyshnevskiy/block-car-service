@@ -6,6 +6,7 @@ import UserContext from '../../../context/userContext';
 import Button from '../../Button/Button';
 import css from './SessionItem.module.css';
 import DateContainer from '../../DateContainer/DateContainer';
+import { animateScroll as scroll } from 'react-scroll';
 import * as XLSX from 'xlsx';
 
 function SessionItem({ details, fetchClientDetails }) {
@@ -14,11 +15,17 @@ function SessionItem({ details, fetchClientDetails }) {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/clients/${clientId}/details/${details.id}`);
+    navigate(`/clients/${clientId}/session/${details.id}`);
   };
-
+  const scrollDuration = 500;
+  
   const handleEditClick = (e) => {
     e.stopPropagation();
+
+    scroll.scrollToTop({
+      duration: scrollDuration
+    });
+
     setSessionEdit({
       clientId,
       session: details,

@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/clients/:clientId' element={<ClientPage />} />
-        <Route path='/clients/:clientId/details/:detailId' element={<DetailPage />} />
+        <Route path='/clients/:clientId/session/:sessionId' element={<DetailPage />} />
       </Routes>
       <ToastContainer />
     </CarServiceProvider>

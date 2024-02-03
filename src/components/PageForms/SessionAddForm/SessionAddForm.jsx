@@ -60,6 +60,10 @@ function SessionAddForm({ sessionFn }) {
     setDate('');
     setPurpose('');
     setSessionMileage('');
+
+    if (datePickerRef.current) {
+      datePickerRef.current._flatpickr.clear();
+    }
   };
 
   const submitSession = async (e) => {
@@ -86,13 +90,14 @@ function SessionAddForm({ sessionFn }) {
       <h2 className={css.formTitle}>Add Session</h2>
       <div className={css.formGroup}>
         <input
-          style={{ marginBottom: '4rem' }}
           className={css.inputField}
           type='text'
           name='dateField'
           placeholder='Date'
-          ref={datePickerRef}
+          ref
+          ={datePickerRef}
         />
+        <label className={css.labelField}>Date</label>
       </div>
       <div className={css.formGroup}>
         <input

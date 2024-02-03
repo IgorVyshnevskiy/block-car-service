@@ -10,13 +10,14 @@
   transition: transform .3s;
 }
 
+.clientListItem:not(:last-child) {
+  margin-bottom: 2.4rem;
+}
+
 .clientListItem:hover {
   transform: translateY(-1rem) scale(1.02);
 }
 
-.clientListItem:not(:last-child) {
-  margin-bottom: 2.4rem;
-}
 
 .clientName {
   font-size: 2.4rem;

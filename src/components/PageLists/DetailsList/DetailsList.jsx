@@ -2,6 +2,7 @@ import DetailItem from "./../../PageListItems/DetailItem";
 
 
 function DetailList({ details }) {
+
   return (
     <div>
       <ul>
