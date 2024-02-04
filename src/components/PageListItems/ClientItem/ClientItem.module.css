@@ -29,12 +29,13 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.2rem;
 }
 
 .clientWrapper p {
   flex-grow: 1;
   color: #ccc;
+  margin-bottom: 1rem;
 }
 
 .textColor {

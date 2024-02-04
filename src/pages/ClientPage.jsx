@@ -5,7 +5,7 @@ import SessionList from '../components/PageLists/SessionList';
 import SessionAddForm from '../components/PageForms/SessionAddForm';
 import PageCard from '../components/PageCard';
 import SessionFilter from '../components/Filters/SessionFilter';
-import css from './clientPage.module.css';
+import css from './PageStyles.module.css';
 import GoBackBtn from '../components/GoBackBtn/GoBackBtn';
 
 function ClientPage() {
@@ -37,22 +37,22 @@ function ClientPage() {
   };
   return (
     <PageCard>
-      <Header title={'Client List'} />
+      <Header title={'Block car'} />
       <GoBackBtn onclickHandler={GoBack}/>
       {client ? (
         <div>
           <div className={css.clientDetailsBlock}>
             <h2 className={css.clientName}>
-              {client.owner}'s {client.car} Details
+              {client.owner} {client.car} Деталі
             </h2>
             <div className={css.detailFlex}>
               <p className={css.detailBlockparagraph}>
-                <span className={css.detailBlockparagraphColor}>Phone:</span>{' '}
+                <span className={css.detailBlockparagraphColor}>Номер телефону:</span>{' '}
                 {client.phone}
               </p>
               <p className={css.detailBlockparagraph}>
-                <span className={css.detailBlockparagraphColor}>Mileage:</span>{' '}
-                {client.mileage}
+                <span className={css.detailBlockparagraphColor}>Пробіг авто:</span>{' '}
+                {client.mileage} км
               </p>
             </div>
           </div>

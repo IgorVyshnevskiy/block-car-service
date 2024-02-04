@@ -2,34 +2,37 @@
   "clients": [
     {
       "owner": "Igor Vyshnevskyi",
-      "phone": "2222",
-      "car": "hyundai i30 2010",
-      "mileage": "2222422",
+      "phone": "0505555555",
+      "car": "hyundai i30 2010 cw 200r",
+      "mileage": "999999",
       "sessions": [
         {
           "id": 1,
-          "date": "2021-10-10",
-          "purpose": "amer-motionnpm install framer-motionnpm install framer-motionnpm install framer-motionnpm install framer-motion",
-          "sessionMileage": 23456,
-          "totalPrice": 100.55,
+          "date": "10-10-2010",
+          "purpose": "amer-ll framer-motr-motr-motionnpm install framer-motionnpm install framer-motion",
+          "sessionMileage": 234561,
+          "totalPrice": 0,
           "details": [
             {
               "id": 1,
-              "detail": "motor",
-              "mechPrice": 50.55,
-              "detailPrice": 150
+              "detail": "motorrd-wrap:wrap:wrap:wrap:wrap:wrap:wrap:wrap: break-word;word-wrap: break-word;",
+              "mechPrice": 666,
+              "detailPrice": 1500,
+              "combinePrice": 2166
             },
             {
               "id": 2,
               "detail": "turbine",
               "mechPrice": 50.55,
-              "detailPrice": 150
+              "detailPrice": 150,
+              "combinePrice": 200.55
             },
             {
               "id": 3,
               "detail": "window",
               "mechPrice": 50.55,
-              "detailPrice": 150
+              "detailPrice": 150,
+              "combinePrice": 200.55
             }
           ],
           "reports": [
@@ -51,29 +54,18 @@
           ]
         },
         {
-          "id": 2,
+          "id": 234,
           "date": "2024-10-10",
-          "purpose": "delete car 2",
-          "sessionMileage": 22222,
+          "purpose": "delete car 222",
+          "sessionMileage": 222221,
           "totalPrice": 200.55,
           "details": [
             {
-              "id": 1,
-              "detail": "motor",
-              "mechPrice": 50.55,
-              "detailPrice": 150
-            },
-            {
-              "id": 2,
-              "detail": "turbine",
-              "mechPrice": 50.55,
-              "detailPrice": 150
-            },
-            {
-              "id": 3,
-              "detail": "window",
-              "mechPrice": 50.55,
-              "detailPrice": 150
+              "id": "O5nqdOMAd-TJFjXGI3H-y",
+              "detail": "qwe",
+              "mechPrice": 123,
+              "detailPrice": 55555,
+              "combinePrice": 55678
             }
           ],
           "reports": [
@@ -95,193 +87,16 @@
           ]
         },
         {
-          "id": "-2h_7XP3jIAGQA3edd44y",
-          "date": "2024-02-08T22:00:00.000Z",
-          "purpose": "car car car",
-          "sessionMileage": 12345
+          "id": 2,
+          "date": "2024-01-31T22:00:00.000Z",
+          "purpose": "new user",
+          "sessionMileage": 1,
+          "totalPrice": 0,
+          "details": [],
+          "reports": []
         }
       ],
       "id": 1
-    },
-    {
-      "owner": "jonh smith",
-      "phone": "222222",
-      "car": "ravon china 2021",
-      "mileage": 400000,
-      "sessions": [
-        {
-          "id": 1,
-          "date": "2024-10-10",
-          "purpose": "i want to repair my car 1",
-          "sessionMileage": 200000,
-          "mechPrice": 50.55,
-          "detailPrice": 150,
-          "fullPrice": 100.55,
-          "details": [
-            {
-              "id": 1,
-              "detail": "motor",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            },
-            {
-              "id": 2,
-              "detail": "turbine",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            },
-            {
-              "id": 3,
-              "detail": "wheels",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "date": "2024-10-10",
-          "purpose": "i want to repair my car 2",
-          "sessionMileage": 200000,
-          "mechPrice": 50.55,
-          "detailPrice": 150,
-          "fullPrice": 200.55,
-          "details": [
-            {
-              "id": 1,
-              "detail": "motor",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            },
-            {
-              "id": 2,
-              "detail": "turbine",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            },
-            {
-              "id": 3,
-              "detail": "wheels",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "date": "2024-10-10",
-          "purpose": "i want to repair my car 3",
-          "sessionMileage": 200000,
-          "mechPrice": 50.55,
-          "detailPrice": 150,
-          "fullPrice": 300.55,
-          "details": [
-            {
-              "id": 1,
-              "detail": "motor",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            },
-            {
-              "id": 2,
-              "detail": "turbine",
-              "description": "you need to fix your motor",
-              "price": 44.95,
-              "totalPrice": 44.95
-            }
-          ]
-        }
-      ],
-      "id": 2
-    },
-    {
-      "id": 3,
-      "owner": "max max",
-      "phone": "0505005050",
-      "car": "bmw 2017",
-      "mileage": 45000,
-      "details": [
-        {
-          "id": 1,
-          "detail": "motor",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 2,
-          "detail": "turbine",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 3,
-          "detail": "wheels",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        }
-      ],
-      "sessions": [
-        {
-          "id": "sJ8L157OPzubTSusjCcWO",
-          "date": "2024-02-13T22:00:00.000Z",
-          "purpose": "i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22i want to my car 22",
-          "sessionMileage": 565965969
-        },
-        {
-          "id": "-FoKqpg8UHpXKOPvwf2Hm",
-          "date": "2024-02-07T22:00:00.000Z",
-          "purpose": "qwert",
-          "sessionMileage": 123
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "owner": "ksysha cherry",
-      "phone": "0505005050",
-      "car": "smart car 2022",
-      "mileage": 11000,
-      "details": [
-        {
-          "id": 1,
-          "detail": "motor",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 2,
-          "detail": "turbine",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        },
-        {
-          "id": 3,
-          "detail": "wheels",
-          "description": "you need to fix your motor",
-          "price": 44.95,
-          "totalPrice": 44.95
-        }
-      ],
-      "sessions": [
-        {
-          "id": "z0B5JNCzMmRp9RAtDliy6",
-          "date": "2024-01-17",
-          "purpose": "car wash",
-          "sessionMileage": 1111111
-        }
-      ]
     },
     {
       "owner": "Ігор  Теребонька",
@@ -290,6 +105,32 @@
       "mileage": "22000",
       "sessions": [],
       "id": 5
+    },
+    {
+      "owner": "Оксана Вишневська",
+      "phone": "0663742289",
+      "car": "смарт 2022",
+      "mileage": "1000",
+      "sessions": [
+        {
+          "id": 1,
+          "date": "2024-02-06T22:00:00.000Z",
+          "purpose": "щось шумить хелп мі пліз",
+          "sessionMileage": 1000,
+          "totalPrice": 0,
+          "details": [
+            {
+              "id": "58fjZvQjrPjs2QzMx-GRm",
+              "detail": "новий мотор",
+              "mechPrice": 50000,
+              "detailPrice": 100000,
+              "combinePrice": 150000
+            }
+          ],
+          "reports": []
+        }
+      ],
+      "id": 6
     }
   ]
 }

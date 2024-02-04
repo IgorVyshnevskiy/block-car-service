@@ -13,6 +13,7 @@
 .sessionWrapper {
   display: flex;
   margin-bottom: 1rem;
+  color: #ccc;
 }
 
 .infoBlock {
@@ -28,24 +29,6 @@
 
 .clientListItem:not(:last-child) {
   margin-bottom: 2.4rem;
-}
-
-.clientName {
-  font-size: 2.4rem;
-  margin-bottom: 2rem;
-  color: #ffba88;
-}
-
-.clientWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 2.4rem;
-}
-
-.clientWrapper p {
-  width: 33%;
-  color: #ccc;
 }
 
 .textColor {

@@ -5,10 +5,24 @@
 
 .formGroup {
   position: relative;
-  
-
 }
-.formGroup:not(:last-child) {
+
+/* .priceInputGroup {
+  display: flex;
+  width: 100%;
+}
+
+.priceInputGroup > .formGroup {
+  width: 50%;
+}
+
+.priceInputGroup > .formGroup:not(:last-child) {
+  margin-right: 2rem;
+} */
+
+
+
+.formGroup{
   margin-bottom: 2rem;
 }
 
@@ -32,7 +46,7 @@
   font-family: inherit;
   color: rgb(31, 31, 31);
   padding: 1.5rem 2rem;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-bottom: 3px solid transparent;

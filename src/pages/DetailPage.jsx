@@ -6,6 +6,8 @@ import PageCard from '../components/PageCard';
 import GoBackBtn from '../components/GoBackBtn/GoBackBtn';
 import DetailAddForm from '../components/PageForms/DetailAddForm';
 import ReportList from '../components/PageLists/ReportList';
+import css from './PageStyles.module.css';
+import TotalPriceTag from '../components/TotalPriceTag';
 
 function DetailPage() {
   const { clientId, sessionId } = useParams();
@@ -43,13 +45,18 @@ function DetailPage() {
 
   return (
     <PageCard>
-      <Header title={'Detail List'} />
+      <Header title={'Block car'} />
 
       <GoBackBtn onclickHandler={GoBack}/>
       {detail ? (
         <div>
-          <DetailAddForm/>
-          <DetailsList details={detail} />
+          <div className={css.detailBlockSession}>
+            <p className={css.detailPurpose}><span className={css.textColor}>Причина звернення:</span> {detail.purpose}</p>
+            <p className={css.detailDate}><span className={css.textColor}>Дата: </span>{detail.date}</p>
+          </div>
+          <DetailAddForm fetchClientsDetails={fetchClientDetails}/>
+          <DetailsList details={detail} fetchClientsDetails={fetchClientDetails}/>
+          <TotalPriceTag details={detail}/>
           <ReportList details={detail} fetchClientsDetails={fetchClientDetails}/>
         </div>
       ) : (

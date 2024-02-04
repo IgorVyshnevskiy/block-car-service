@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import UserContext from '../../../context/userContext';
-import css from './FormStyles.module.css';
+import css from './../FormStyles.module.css';
 import Button from '../../Button/Button';
 
 function HomeAddForm() {
@@ -58,7 +58,7 @@ function HomeAddForm() {
       sessions: clientEdit.edit ? clientEdit.client.sessions : [],
     };
 
-    // console.log(newClient);
+    
 
     if (clientEdit.edit === true) {
       updateClients(clientEdit.client.id, newClient);
@@ -67,12 +67,11 @@ function HomeAddForm() {
     }
 
     reset();
-    // fetchClientDetail()
   };
 
   return (
     <form className={css.formContainer} onSubmit={submitUser}>
-      <h2 className={css.formTitle}>Add user</h2>
+      <h2 className={css.formTitle}>ДОБАВИТИ КЛІЄНТА</h2>
       <div>
         <div className={css.formGroup}>
           <input
@@ -81,12 +80,12 @@ function HomeAddForm() {
             name='ownerField'
             id='ownerField'
             value={owner}
-            placeholder='User Name'
+            placeholder='імʼя'
             onChange={onHandleChange}
             autoComplete="off"
           />
           <label htmlFor='ownerField' className={css.labelField}>
-            User Name
+          імʼя
           </label>
         </div>
         <div className={css.formGroup}>
@@ -95,11 +94,11 @@ function HomeAddForm() {
             type='text'
             name='phoneField'
             value={phone}
-            placeholder='phone'
+            placeholder='номер телефону'
             onChange={onHandleChange}
             autoComplete="off"
           />
-          <label htmlFor='phoneField' className={css.labelField}>User Phone</label>
+          <label htmlFor='phoneField' className={css.labelField}>номер телефону</label>
         </div>
         <div className={css.formGroup}>
           <input
@@ -107,11 +106,11 @@ function HomeAddForm() {
             type='text'
             name='carField'
             value={car}
-            placeholder='User car'
+            placeholder='авто'
             onChange={onHandleChange}
             autoComplete="off"
           />
-          <label htmlFor='carField' className={css.labelField}>User Car</label>
+          <label htmlFor='carField' className={css.labelField}>авто</label>
         </div>
         <div className={css.formGroup}>
           <input
@@ -119,15 +118,15 @@ function HomeAddForm() {
             type='text'
             name='mileageField'
             value={mileage}
-            placeholder='mileage'
+            placeholder='пробіг'
             onChange={onHandleChange}
             autoComplete="off"
           />
-          <label htmlFor='mileageField' className={css.labelField}>User Mileage</label>
+          <label htmlFor='mileageField' className={css.labelField}>пробіг</label>
         </div>
        
        
-        <Button type='submit' label={'Submit'} styleName={'submitBtn'} />
+        <Button type='submit' label={'Добавити'} styleName={'submitBtn'} />
       </div>
     </form>
   );

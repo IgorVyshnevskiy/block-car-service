@@ -1,10 +1,11 @@
 import React from 'react';
 import ReportItem from "../../PageListItems/ReporItem/ReportItem";
+import css from './../ListStyles.module.css';
 
 function ReportList({ fetchClientsDetails, details }) {
   return (
-    <div>
-      <h3>Report List</h3>
+    <div className={css.listContainer}>
+      <h3 className={css.listTitle}>ЗАУВАЖЕННЯ</h3>
       <ul>
         {details && details.reports ? (
           details.reports.map((report) => (

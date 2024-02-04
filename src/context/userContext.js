@@ -22,6 +22,9 @@ const updateNotificationStyles = {
   background: '#f1c40f',
   fontSize: '18px',
 };
+
+let sessionCounter = 1
+
 export const CarServiceProvider = ({ children }) => {
   const [filter, setFilter] = useState('');
   const [sessionFilter, setSessionFilter] = useState('');
@@ -36,6 +39,12 @@ export const CarServiceProvider = ({ children }) => {
   const [sessionEdit, setSessionEdit] = useState({
     clientId: 0,
     session: {},
+    edit: false,
+  });
+  const [detailEdit, setDetailEdit] = useState({
+    clientId: null,
+    sessionId: null,
+    details: {},
     edit: false,
   });
 
@@ -133,35 +142,40 @@ export const CarServiceProvider = ({ children }) => {
     }
   };
 
-  const updateSessions = async (id, updSession, callback) => {
-    const client = clients.find((c) => c.id === Number(id));
-    console.log(client)
-    const sessions = client.sessions.map((session) => {
-      if (session.id === updSession.id) {
-        return updSession;
-      }
-      return session;
-    });
+  const updateSessions = async (clientId, updatedSession, callback) => {
     try {
-      const response = await fetch(`http://localhost:5000/clients/${id}`, {
+      const client = clients.find((c) => c.id === Number(clientId));
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        return;
+      }
+  
+      const updatedSessions = client.sessions.map((session) => {
+        if (session.id === updatedSession.id) {
+          return { ...session, ...updatedSession };
+        }
+        return session;
+      });
+  
+      const updatedClient = { ...client, sessions: updatedSessions };
+  
+      const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...client, sessions }),
+        body: JSON.stringify(updatedClient),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to update client');
       }
-
+  
       const data = await response.json();
-      console.log(data);
-
       setClients((prevClients) =>
-        prevClients.map((item) => (item.id === Number(id) ? data : item))
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
       );
-
+  
       setSessionEdit({
         session: {},
         edit: false,
@@ -176,14 +190,15 @@ export const CarServiceProvider = ({ children }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        
       });
+  
       return data;
     } catch (error) {
       console.error(error);
       throw error;
     }
   };
+  
   
   const addSession = async (id, newSession) => {
     try {
@@ -194,12 +209,24 @@ export const CarServiceProvider = ({ children }) => {
         return; 
       }
   
-      const sessionId = nanoid();
+      let sessionId = sessionCounter;
+      const usedSessionIds = new Set(client.sessions.map((session) => session.id));
   
-      const updatedClient = {
-        ...client,
-        sessions: [...(client.sessions || []), { id: sessionId, ...newSession }],
-      };
+      while (usedSessionIds.has(sessionId)) {
+        sessionId++;
+      }
+  
+     
+    const updatedClient = {
+      ...client,
+      sessions: [...(client.sessions || []), {
+        id: sessionId,
+        ...newSession,
+        totalPrice: 0,  
+        details: [],    
+        reports: [],    
+      }],
+    };
   
       const response = await fetch(`http://localhost:5000/clients/${id}`, {
         method: 'PUT',
@@ -286,7 +313,7 @@ const deleteSession = async (clientId, sessionId, callback) => {
   }
 };
 
-const deleteReport = async (clientId, sessionId, reportId, callback) => {
+const deleteItem = async (clientId, sessionId, itemId, itemType, callback) => {
   try {
     const client = clients.find((c) => c.id === Number(clientId));
     if (!client) {
@@ -300,11 +327,17 @@ const deleteReport = async (clientId, sessionId, reportId, callback) => {
       return;
     }
 
-    const updatedReports = session.reports.filter(
-      (report) => report.id !== reportId
-    );
+    let updatedItems;
+    if (itemType === 'report') {
+      updatedItems = session.reports.filter((item) => item.id !== itemId);
+    } else if (itemType === 'detail') {
+      updatedItems = session.details.filter((item) => item.id !== itemId);
+    } else {
+      console.error(`Invalid itemType: ${itemType}`);
+      return;
+    }
 
-    const updatedSession = { ...session, reports: updatedReports };
+    const updatedSession = { ...session, [itemType + 's']: updatedItems };
     const updatedClientSessions = client.sessions.map((s) =>
       s.id === Number(sessionId) ? updatedSession : s
     );
@@ -320,7 +353,7 @@ const deleteReport = async (clientId, sessionId, reportId, callback) => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to delete report');
+      throw new Error(`Failed to delete ${itemType}`);
     }
 
     const data = await response.json();
@@ -328,7 +361,7 @@ const deleteReport = async (clientId, sessionId, reportId, callback) => {
       prevClients.map((item) => (item.id === Number(clientId) ? data : item))
     );
 
-    toast.error(`Report deleted`, {
+    toast.error(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} deleted`, {
       style: deleteNotificationStyles,
       icon: <FaTrash />,
       autoClose: 2000,
@@ -345,6 +378,182 @@ const deleteReport = async (clientId, sessionId, reportId, callback) => {
     console.error(error);
     throw error;
   }
+};
+
+const addDetail = async (clientId, sessionId, newDetail) => {
+  try {
+    const client = clients.find((c) => c.id === Number(clientId));
+
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      throw new Error(`Client with ID ${clientId} not found`);
+    }
+
+    const session = client.sessions.find((s) => s.id === sessionId);
+
+    if (!session) {
+      console.error(`Session with ID ${sessionId} not found`);
+      throw new Error(`Session with ID ${sessionId} not found`);
+    }
+
+    const updatedSession = {
+      ...session,
+      details: [...(session.details || []), { id: nanoid(), ...newDetail }],
+    };
+
+    const updatedSessions = client.sessions.map((s) =>
+      s.id === sessionId ? updatedSession : s
+    );
+
+    const updatedClient = {
+      ...client,
+      sessions: updatedSessions,
+    };
+
+    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedClient),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add detail');
+    }
+
+    const data = await response.json();
+
+    try {
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
+    } catch (error) {
+      console.error('Error updating clients on the client side:', error);
+    }
+
+    toast.success(`Detail added`, {
+      style: addNotificationStyles,
+      icon: <FaRegCheckCircle />,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+
+
+const updateDetails = async (clientId, sessionId, updatedDetail, fetchClientsDetails) => {
+  try {
+    const client = clients.find((c) => c.id === Number(clientId));
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      return;
+    }
+
+    const session = client.sessions.find((s) => s.id === Number(sessionId));
+    if (!session) {
+      console.error(`Session with ID ${sessionId} not found`);
+      return;
+    }
+
+    const updatedDetails = session.details.map((detail) => {
+      if (detail.id === updatedDetail.id) {
+        return { ...detail, ...updatedDetail };
+      }
+      return detail;
+    });
+
+    const updatedSession = { ...session, details: updatedDetails };
+
+    const updatedClientSessions = client.sessions.map((s) =>
+      s.id === Number(sessionId) ? updatedSession : s
+    );
+
+    const updatedClient = { ...client, sessions: updatedClientSessions };
+
+    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedClient),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update details');
+    }
+
+    const data = await response.json();
+    setClients((prevClients) =>
+      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+    );
+
+    setDetailEdit({
+      clientId: null,
+      sessionId: null,
+      details: {},
+      edit: false,
+    });
+
+    fetchClientsDetails();
+
+    toast.warning(`Detail updated`, {
+      style: updateNotificationStyles,
+      icon: <FaRegEdit />,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const editDetail = (clientId, sessionId, detailId, callback) => {
+  const client = clients.find((c) => c.id === Number(clientId));
+
+  if (!client) {
+    console.error(`Client with ID ${clientId} not found`);
+    return;
+  }
+
+  const session = client.sessions.find((s) => s.id === sessionId);
+
+  if (!session) {
+    console.error(`Session with ID ${sessionId} not found`);
+    return;
+  }
+
+  const detail = session.details.find((d) => d.id === detailId);
+
+  if (!detail) {
+    console.error(`Detail with ID ${detailId} not found`);
+    return;
+  }
+
+  setDetailEdit({
+    clientId: client.id,
+    sessionId: session.id,
+    detail,
+    edit: true,
+  });
+  callback()
 };
 
 
@@ -406,6 +615,7 @@ const scrollDuration = 500;
         filterdClients,
         filterSessions,
         sessionEdit,
+        detailEdit,
         setSessionEdit,
         changeFilter,
         changeSessionFilter,
@@ -413,8 +623,11 @@ const scrollDuration = 500;
         deleteClient,
         fetchClients,
         updateClients,
-        deleteReport,
+        deleteItem,
+        addDetail,
+        updateDetails,
         editClient,
+        editDetail,
         updateSessions,
         addSession,
         deleteSession,

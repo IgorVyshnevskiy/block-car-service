@@ -8,13 +8,13 @@ const SessionFilter = () => {
 
   return (
     <div className={css.filterContainer}>
-      <label className={css.filterLabel}>Find contacts by purpose</label>
+      <label className={css.filterLabel}>Знайти сеанс</label>
       <div className={css.inputContainer}>
         <IoMdSearch className={css.searchIcon} />
         <input className={css.filterInput}
           type='text'
           onChange={changeSessionFilter}
-          placeholder="Search..."
+          placeholder="пошук..."
         />
       </div>
     </div>

@@ -1,16 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserContext from '../../../context/userContext';
-import css from './../HomeAddForm/FormStyles.module.css';
+import css from './../FormStyles.module.css';
 import Button from '../../Button/Button';
 
-function DetailAddForm({ detailsFn }) {
-  const { clientId } = useParams();
-  const { addDetail } = useContext(UserContext);
+function DetailAddForm({ fetchClientsDetails }) {
+  const { clientId, sessionId } = useParams();
+  const { detailEdit, updateDetails, addDetail } = useContext(UserContext);
   const [detail, setDetail] = useState('');
   const [mechPrice, setMechPrice] = useState('');
   const [detailPrice, setDetailPrice] = useState('');
 
+  useEffect(() => {
+    if (detailEdit.edit) {
+      setDetail(detailEdit?.detail.detail);
+      setMechPrice(detailEdit?.detail.mechPrice);
+      setDetailPrice(detailEdit?.detail.detailPrice);
+    }
+  }, [detailEdit]);
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -37,57 +44,71 @@ function DetailAddForm({ detailsFn }) {
   const submitDetail = async (e) => {
     e.preventDefault();
 
+    const combinePrice = Number(mechPrice) + Number(detailPrice);
+
     const newDetail = {
       detail,
-      mechPrice,
-      detailPrice,
+      mechPrice: Number(mechPrice),
+      detailPrice: Number(detailPrice),
+      combinePrice,
     };
 
-    await addDetail(clientId, newDetail);
-    detailsFn();
+    if (detailEdit.edit) {
+      await updateDetails(
+        clientId,
+        sessionId,
+        { ...detailEdit.detail, ...newDetail },
+        fetchClientsDetails
+      );
+    } else {
+      await addDetail(Number(clientId), Number(sessionId), newDetail);
+      fetchClientsDetails();
+    }
     reset();
   };
 
   return (
     <form className={css.formContainer} onSubmit={submitDetail}>
-      <h2 className={css.formTitle}>Add Detail</h2>
+      <h2 className={css.formTitle}>ДОБАВИТИ ЗАПЧАСТИНУ</h2>
       <div className={css.formGroup}>
         <input
           className={css.inputField}
           type='text'
           name='detailField'
           value={detail}
-          placeholder='Detail'
-          autoComplete="off"
+          placeholder='запчастина'
+          autoComplete='off'
           onChange={onHandleChange}
         />
-        <label className={css.labelField}>Detail</label>
+        <label className={css.labelField}>запчастина</label>
       </div>
-      <div className={css.formGroup}>
-        <input
-          className={css.inputField}
-          type='text'
-          name='mechPriceField'
-          value={mechPrice}
-          placeholder='Mech Price'
-          autoComplete="off"
-          onChange={onHandleChange}
-        />
-        <label className={css.labelField}>Mech Price</label>
+      <div className={css.priceInputGroup}>
+        <div className={css.formGroup}>
+          <input
+            className={css.inputField}
+            type='text'
+            name='mechPriceField'
+            value={mechPrice}
+            placeholder='ціна за роботу'
+            autoComplete='off'
+            onChange={onHandleChange}
+          />
+          <label className={css.labelField}>ціна за роботу</label>
+        </div>
+        <div className={css.formGroup}>
+          <input
+            className={css.inputField}
+            type='text'
+            name='detailPriceField'
+            value={detailPrice}
+            placeholder='ціна за запчастину'
+            autoComplete='off'
+            onChange={onHandleChange}
+          />
+          <label className={css.labelField}>ціна за запчастину</label>
+        </div>
       </div>
-      <div className={css.formGroup}>
-        <input
-          className={css.inputField}
-          type='text'
-          name='detailPriceField'
-          value={detailPrice}
-          placeholder='Detail Price'
-          autoComplete="off"
-          onChange={onHandleChange}
-        />
-        <label className={css.labelField}>Detail Price</label>
-      </div>
-      <Button type='Submit' label={'Submit'} styleName={'submitBtn'} />
+      <Button type='Submit' label={'Добавити'} styleName={'submitBtn'} />
     </form>
   );
 }

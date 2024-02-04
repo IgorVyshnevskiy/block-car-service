@@ -1,13 +1,13 @@
 .detailListItem {
   width: 100%;
   background-color: rgba(61, 61, 61, 0.5);
-  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
   padding: 2rem;
   border-radius: 15px;
   border: 2px solid #5b3f2d;
   font-size: 1.8rem;
   cursor: pointer;
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
 .detailListItem:hover {
@@ -16,4 +16,56 @@
 
 .detailListItem:not(:last-child) {
   margin-bottom: 2.4rem;
+}
+
+.contentContainer {
+  display: flex;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #ccc;
+}
+
+.detailLogo {
+  width: 3rem;
+  height: 3rem;
+  color: #7e7e7e;
+  margin-right: 1.5rem;
+}
+
+.detailContainer {
+  flex: 1;
+  max-width: 64%;
+  margin-right: 2.5rem;
+}
+
+.priceContainer {
+  margin-bottom: 1rem;
+}
+
+.mechPrice {
+  color: #249836;
+  margin-bottom: 1rem;
+}
+
+
+
+.textColor {
+  color: #a77247;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.combinedPriceTag {
+  background-color: rgba(24, 24, 24, 0.5);
+
+  color: #ccc;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-right: 1.2rem;
+  padding: 4px 10px;
 }

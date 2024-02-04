@@ -31,3 +31,24 @@
   font-weight: bold;
   margin-right: 5px;
 }
+
+.detailBlockSession {
+  width: 90%;
+  margin: 0 auto;
+  color: #ccc;
+  font-size: 1.5rem;
+}
+
+.textColor {
+  color: #ffba88;
+  font-weight: bold;
+}
+
+.detailPurpose {
+  margin-bottom: 2rem;
+}
+
+.detailDate {
+  margin-bottom: 1rem;
+
+}

@@ -8,6 +8,7 @@ import css from './SessionItem.module.css';
 import DateContainer from '../../DateContainer/DateContainer';
 import { animateScroll as scroll } from 'react-scroll';
 import * as XLSX from 'xlsx';
+import TotalPriceTag from '../../TotalPriceTag';
 
 function SessionItem({ details, fetchClientDetails }) {
   const { clientId } = useParams();
@@ -56,17 +57,14 @@ function SessionItem({ details, fetchClientDetails }) {
         <DateContainer date={details.date} />
         <div className={css.infoBlock}>
           <p className={css.purpose}>
-            <span className={css.textColor}>Purpose:</span> {details.purpose}
+            <span className={css.textColor}>Причина звернення:</span> {details.purpose}
           </p>
           <div className={css.infoBlockFlex}>
             <p>
-              <span className={css.textColor}>Mileage:</span>{' '}
+              <span className={css.textColor}>Пробіг:</span>{' '}
               {details.sessionMileage}
             </p>
-            <p>
-              <span className={css.textColor}>Total Price:</span>{' '}
-              {details.totalPrice}
-            </p>
+            <TotalPriceTag details={details}/>
           </div>
         </div>
       </div>
@@ -86,7 +84,7 @@ function SessionItem({ details, fetchClientDetails }) {
           onClick={handleEditClick}
           label={
             <>
-              Edit
+              Редагувати
               <FaEdit color='black' style={{ marginLeft: '4px' }} />
             </>
           }
@@ -96,7 +94,7 @@ function SessionItem({ details, fetchClientDetails }) {
           onClick={handleDeleteClick}
           label={
             <>
-              Delete <FaTrash color='black' style={{ marginLeft: '4px' }} />
+              Видалити <FaTrash color='black' style={{ marginLeft: '4px' }} />
             </>
           }
           styleName={'deleteBtn'}

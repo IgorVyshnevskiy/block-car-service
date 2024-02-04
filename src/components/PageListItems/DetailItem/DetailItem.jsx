@@ -1,39 +1,81 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import css from './DetailListItem.module.css';
-import { BsTools } from "react-icons/bs";
+import { BsTools } from 'react-icons/bs';
 import Button from '../../Button/Button';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import UserContext from '../../../context/userContext';
+import { useParams } from 'react-router-dom';
+import { animateScroll as scroll } from 'react-scroll';
 
-function DetailItem({ detailItem }) {
+function DetailItem({ detailItem, fetchClientDetails }) {
+  const { editDetail, deleteItem } = useContext(UserContext);
+  const { clientId, sessionId } = useParams();
+
+  const scrollDuration = 500;
+  
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+  
+    scroll.scrollToTop({
+      duration: scrollDuration
+    });
+  
+    editDetail(Number(clientId),Number(sessionId), detailItem.id, fetchClientDetails);
+  };
+  
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    deleteItem(
+      clientId,
+      sessionId,
+      detailItem.id,
+      'detail',
+      fetchClientDetails
+    );
+  };
 
   if (!detailItem) {
     return <p>Detail is undefined</p>;
   }
   return (
     <li key={detailItem.id} className={css.detailListItem}>
-      <BsTools/>
-      <div>
-      <p>ID {detailItem.id}</p>
-      <p>Detail: {detailItem.detail}</p>
-      <p>Mech Price: {detailItem.mechPrice}</p>
-      <p>detailPrice: {detailItem.detailPrice}</p>
+      <div className={css.contentContainer}>
+        
+
+        <div className={css.detailContainer}>
+          <p>
+          <BsTools className={css.detailLogo} />
+            <span className={css.textColor}>Запчастина:</span> {detailItem.detail}
+          </p>
+        </div>
+        <div className={css.priceContainer}>
+          <p className={css.mechPrice}>
+            <span className={css.textColor}>Робота:</span> +
+            {detailItem.mechPrice} грн.
+          </p>
+          <p>
+            <span className={css.textColor}>Запчастина:</span>{' '}
+            {detailItem.detailPrice} грн.
+          </p>
+        </div>
       </div>
-      <div >
+      <div className={css.btnWrapper}>
+        <p className={css.combinedPriceTag}>{detailItem.combinePrice} грн.</p>
         <Button
-          // onClick={handleEditClick}
+          onClick={handleEditClick}
           label={
             <>
-              Edit
-              <FaEdit color='black'/>
+              Редагувати
+              <FaEdit color='black' style={{ marginLeft: '4px' }} />
             </>
           }
           styleName={'editBtn'}
         />
         <Button
-          // onClick={handleDeleteClick}
+          onClick={handleDeleteClick}
           label={
             <>
-              Delete <FaTrash color='black' style={{ marginLeft: '4px' }} />
+              Видалити <FaTrash color='black' style={{ marginLeft: '4px' }} />
             </>
           }
           styleName={'deleteBtn'}

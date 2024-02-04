@@ -8,13 +8,13 @@ const Filter = () => {
 
   return (
     <div className={css.filterContainer}>
-      <label className={css.filterLabel}>Find contacts by name</label>
+      <label className={css.filterLabel}>Знайти клієнта по імені</label>
       <div className={css.inputContainer}>
         <IoMdSearch className={css.searchIcon} />
         <input className={css.filterInput}
           type='text'
           onChange={changeFilter}
-          placeholder="Search..."
+          placeholder="пошук..."
         />
       </div>
     </div>

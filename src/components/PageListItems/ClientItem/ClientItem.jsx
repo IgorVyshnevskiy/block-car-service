@@ -23,9 +23,9 @@ function ClientItem({ client }) {
       <div>
         <h3 className={css.clientName}>{client.owner}</h3>
         <div className={css.clientWrapper}>
-          <p><span className={css.textColor}>Phone:</span>{client.phone}</p>
-          <p><span className={css.textColor}>Car:</span>{client.car}</p>
-          <p><span className={css.textColor}>Mileage:</span>{client.mileage} km</p>
+          <p><span className={css.textColor}>Номер телефону:</span>{client.phone}</p>
+          <p><span className={css.textColor}>Авто:</span>{client.car}</p>
+          <p><span className={css.textColor}>Пробіг:</span>{client.mileage} км</p>
         </div>
       </div>
       <div className={css.ClientBtnWrapper}>
@@ -33,7 +33,7 @@ function ClientItem({ client }) {
           onClick={(e) => { handleButtonClick(e); editClient(client); }}
           label={
             <>
-              Edit
+              Редагувати
               <FaEdit color='black' style={{ marginLeft: '4px' }} />
             </>
           }
@@ -43,7 +43,7 @@ function ClientItem({ client }) {
           onClick={(e) => { handleButtonClick(e); deleteClient(client.id); }}
           label={
             <>
-              Delete <FaTrash color='black' style={{ marginLeft: '4px' }} />
+              Видалити <FaTrash color='black' style={{ marginLeft: '4px' }} />
             </>
           }
           styleName={'deleteBtn'}
@@ -52,5 +52,6 @@ function ClientItem({ client }) {
     </li>
   );
 }
+
 
 export default ClientItem;

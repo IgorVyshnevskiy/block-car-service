@@ -6,12 +6,12 @@ import UserContext from '../../../context/userContext';
 import { useParams } from 'react-router-dom';
 
 function ReportItem({ reportItem, fetchClientDetails }) {
-  const { deleteReport } = useContext(UserContext);
+  const { deleteItem } = useContext(UserContext);
   const { clientId, sessionId } = useParams();
 
   const handleDeleteClick = (e) => {
     e.stopPropagation();
-    deleteReport(clientId, sessionId, reportItem.id, fetchClientDetails);
+    deleteItem(clientId, sessionId, reportItem.id, 'report', fetchClientDetails);
   };
 
   return (
@@ -26,7 +26,7 @@ function ReportItem({ reportItem, fetchClientDetails }) {
           label={
             <>
               Edit
-              <FaEdit color="black" />
+              <FaEdit color="black" style={{ marginLeft: '4px' }}/>
             </>
           }
           styleName={'editBtn'}

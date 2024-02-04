@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import UserContext from '../../../context/userContext';
 import { useParams } from 'react-router-dom';
-import css from './../HomeAddForm/FormStyles.module.css';
+import css from './../FormStyles.module.css';
 import Button from '../../Button/Button';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -73,6 +73,9 @@ function SessionAddForm({ sessionFn }) {
       date,
       purpose,
       sessionMileage,
+      totalPrice: 0,
+      details: sessionEdit.session.details,  // Use the existing details
+      reports: sessionEdit.session.reports,  // Use the existing reports
     };
 
     if (sessionEdit.edit) {
@@ -87,17 +90,17 @@ function SessionAddForm({ sessionFn }) {
 
   return (
     <form className={css.formContainer} onSubmit={submitSession}>
-      <h2 className={css.formTitle}>Add Session</h2>
+      <h2 className={css.formTitle}>ДОБАВИТИ СЕАНС</h2>
       <div className={css.formGroup}>
         <input
           className={css.inputField}
           type='text'
           name='dateField'
-          placeholder='Date'
+          placeholder='дата'
           ref
           ={datePickerRef}
         />
-        <label className={css.labelField}>Date</label>
+        <label className={css.labelField}>дата</label>
       </div>
       <div className={css.formGroup}>
         <input
@@ -105,11 +108,11 @@ function SessionAddForm({ sessionFn }) {
           type='text'
           name='purposeField'
           value={purpose}
-          placeholder='purpose'
+          placeholder='причина звернення'
           autoComplete="off"
           onChange={onHandleChange}
         />
-        <label className={css.labelField}>Purpose</label>
+        <label className={css.labelField}>причина звернення</label>
       </div>
       <div className={css.formGroup}>
         <input
@@ -117,13 +120,13 @@ function SessionAddForm({ sessionFn }) {
           type='text'
           name='sessionMileageField'
           value={sessionMileage}
-          placeholder='cars mileage'
+          placeholder='пробіг'
           autoComplete="off"
           onChange={onHandleChange}
         />
-        <label className={css.labelField}>User Mileage</label>
+        <label className={css.labelField}>пробіг</label>
       </div>
-      <Button type='Submit' label={'Submit'} styleName={'submitBtn'} />
+      <Button type='Submit' label={'Добавити'} styleName={'submitBtn'} />
     </form>
   );
 }
