@@ -23,14 +23,14 @@ const updateNotificationStyles = {
   fontSize: '18px',
 };
 
-let sessionCounter = 1
+let sessionCounter = 1;
 
 export const CarServiceProvider = ({ children }) => {
   const [filter, setFilter] = useState('');
   const [sessionFilter, setSessionFilter] = useState('');
-  
+
   const [clients, setClients] = useState([]);
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [clientEdit, setClientEdit] = useState({
     clients: {},
@@ -45,6 +45,12 @@ export const CarServiceProvider = ({ children }) => {
     clientId: null,
     sessionId: null,
     details: {},
+    edit: false,
+  });
+  const [reportEdit, setReportEdit] = useState({
+    clientId: null,
+    sessionId: null,
+    reports: {},
     edit: false,
   });
 
@@ -95,7 +101,6 @@ export const CarServiceProvider = ({ children }) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      
     });
   };
 
@@ -133,7 +138,6 @@ export const CarServiceProvider = ({ children }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        
       });
       return data;
     } catch (error) {
@@ -149,33 +153,36 @@ export const CarServiceProvider = ({ children }) => {
         console.error(`Client with ID ${clientId} not found`);
         return;
       }
-  
+
       const updatedSessions = client.sessions.map((session) => {
         if (session.id === updatedSession.id) {
           return { ...session, ...updatedSession };
         }
         return session;
       });
-  
+
       const updatedClient = { ...client, sessions: updatedSessions };
-  
-      const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedClient),
-      });
-  
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
+
       if (!response.ok) {
         throw new Error('Failed to update client');
       }
-  
+
       const data = await response.json();
       setClients((prevClients) =>
         prevClients.map((item) => (item.id === Number(clientId) ? data : item))
       );
-  
+
       setSessionEdit({
         session: {},
         edit: false,
@@ -191,64 +198,321 @@ export const CarServiceProvider = ({ children }) => {
         draggable: true,
         progress: undefined,
       });
-  
+
       return data;
     } catch (error) {
       console.error(error);
       throw error;
     }
   };
-  
-  
+
   const addSession = async (id, newSession) => {
     try {
       const client = clients.find((c) => c.id === Number(id));
   
       if (!client) {
         console.error(`Client with ID ${id} not found`);
-        return; 
+        return;
       }
   
       let sessionId = sessionCounter;
-      const usedSessionIds = new Set(client.sessions.map((session) => session.id));
+      const usedSessionIds = new Set(
+        client.sessions.map((session) => session.id)
+      );
   
       while (usedSessionIds.has(sessionId)) {
         sessionId++;
       }
   
-     
-    const updatedClient = {
-      ...client,
-      sessions: [...(client.sessions || []), {
-        id: sessionId,
-        ...newSession,
-        totalPrice: 0,  
-        details: [],    
-        reports: [],    
-      }],
-    };
+      const sessionMileage = newSession.sessionMileage || 0;
   
-      const response = await fetch(`http://localhost:5000/clients/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedClient),
-      });
+      // Check if the sessionMileage is greater than the current mileage of the client
+      if (sessionMileage > client.mileage) {
+        // Update the client's mileage with the sessionMileage
+        const updatedClient = {
+          ...client,
+          mileage: sessionMileage,
+          sessions: [
+            ...(client.sessions || []),
+            {
+              id: sessionId,
+              ...newSession,
+              totalPrice: 0,
+              details: [],
+              reports: [],
+            },
+          ],
+        };
   
-      if (!response.ok) {
-        throw new Error('Failed to add session');
+        const response = await fetch(`http://localhost:5000/clients/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add session');
+        }
+  
+        const data = await response.json();
+  
+        setClients((prevClients) =>
+          prevClients.map((item) => (item.id === Number(id) ? data : item))
+        );
+  
+        toast.success(`Session added`, {
+          style: addNotificationStyles,
+          icon: <FaRegCheckCircle />,
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+  
+        return data;
+      } else {
+        // If sessionMileage is not greater, proceed with the existing logic
+        const updatedClient = {
+          ...client,
+          sessions: [
+            ...(client.sessions || []),
+            {
+              id: sessionId,
+              ...newSession,
+              totalPrice: 0,
+              details: [],
+              reports: [],
+            },
+          ],
+        };
+  
+        const response = await fetch(`http://localhost:5000/clients/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add session');
+        }
+  
+        const data = await response.json();
+  
+        setClients((prevClients) =>
+          prevClients.map((item) => (item.id === Number(id) ? data : item))
+        );
+  
+        toast.success(`Session added`, {
+          style: addNotificationStyles,
+          icon: <FaRegCheckCircle />,
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+  
+        return data;
       }
-  
-      const data = await response.json();
-  
-      console.log('Updated data:', data);
-  
-      setClients((prevClients) =>
-      prevClients.map((item) => (item.id === Number(id) ? data : item))
-    );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
-      toast.success(`Session added`, {
+  const deleteSession = async (clientId, sessionId, callback) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
+
+      const updatedSessions = client.sessions.filter(
+        (session) => session.id !== sessionId
+      );
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...client, sessions: updatedSessions }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to delete session');
+      }
+
+      const data = await response.json();
+
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
+
+      toast.error(`Session deleted`, {
+        style: deleteNotificationStyles,
+        icon: <FaTrash />,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      callback();
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const deleteItem = async (
+    clientId,
+    sessionId,
+    itemId,
+    itemType,
+    callback
+  ) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        return;
+      }
+
+      const session = client.sessions.find((s) => s.id === Number(sessionId));
+      if (!session) {
+        console.error(`Session with ID ${sessionId} not found`);
+        return;
+      }
+
+      let updatedItems;
+      if (itemType === 'report') {
+        updatedItems = session.reports.filter((item) => item.id !== itemId);
+      } else if (itemType === 'detail') {
+        updatedItems = session.details.filter((item) => item.id !== itemId);
+      } else {
+        console.error(`Invalid itemType: ${itemType}`);
+        return;
+      }
+
+      const updatedSession = { ...session, [itemType + 's']: updatedItems };
+      const updatedClientSessions = client.sessions.map((s) =>
+        s.id === Number(sessionId) ? updatedSession : s
+      );
+
+      const updatedClient = { ...client, sessions: updatedClientSessions };
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${itemType}`);
+      }
+
+      const data = await response.json();
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
+
+      toast.error(
+        `${itemType.charAt(0).toUpperCase() + itemType.slice(1)} deleted`,
+        {
+          style: deleteNotificationStyles,
+          icon: <FaTrash />,
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+
+      callback();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const addDetail = async (clientId, sessionId, newDetail) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
+
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        throw new Error(`Client with ID ${clientId} not found`);
+      }
+
+      const session = client.sessions.find((s) => s.id === sessionId);
+
+      if (!session) {
+        console.error(`Session with ID ${sessionId} not found`);
+        throw new Error(`Session with ID ${sessionId} not found`);
+      }
+
+      const updatedSession = {
+        ...session,
+        details: [...(session.details || []), { id: nanoid(), ...newDetail }],
+      };
+
+      const updatedSessions = client.sessions.map((s) =>
+        s.id === sessionId ? updatedSession : s
+      );
+
+      const updatedClient = {
+        ...client,
+        sessions: updatedSessions,
+      };
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to add detail');
+      }
+
+      const data = await response.json();
+
+      try {
+        setClients((prevClients) =>
+          prevClients.map((item) =>
+            item.id === Number(clientId) ? data : item
+          )
+        );
+      } catch (error) {
+        console.error('Error updating clients on the client side:', error);
+      }
+
+      toast.success(`Detail added`, {
         style: addNotificationStyles,
         icon: <FaRegCheckCircle />,
         autoClose: 2000,
@@ -258,7 +522,168 @@ export const CarServiceProvider = ({ children }) => {
         draggable: true,
         progress: undefined,
       });
-  
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const updateDetails = async (
+    clientId,
+    sessionId,
+    updatedDetail,
+    fetchClientsDetails
+  ) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        return;
+      }
+
+      const session = client.sessions.find((s) => s.id === Number(sessionId));
+      if (!session) {
+        console.error(`Session with ID ${sessionId} not found`);
+        return;
+      }
+
+      const updatedDetails = session.details.map((detail) => {
+        if (detail.id === updatedDetail.id) {
+          return { ...detail, ...updatedDetail };
+        }
+        return detail;
+      });
+
+      const updatedSession = { ...session, details: updatedDetails };
+
+      const updatedClientSessions = client.sessions.map((s) =>
+        s.id === Number(sessionId) ? updatedSession : s
+      );
+
+      const updatedClient = { ...client, sessions: updatedClientSessions };
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to update details');
+      }
+
+      const data = await response.json();
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
+
+      setDetailEdit({
+        clientId: null,
+        sessionId: null,
+        details: {},
+        edit: false,
+      });
+
+      fetchClientsDetails();
+
+      toast.warning(`Detail updated`, {
+        style: updateNotificationStyles,
+        icon: <FaRegEdit />,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+  const updateReport = async (
+    clientId,
+    sessionId,
+    updatedReport,
+    fetchClientsDetails
+  ) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        return;
+      }
+
+      const session = client.sessions.find((s) => s.id === Number(sessionId));
+      if (!session) {
+        console.error(`Session with ID ${sessionId} not found`);
+        return;
+      }
+
+      const updatedReports = session.reports.map((report) => {
+        if (report.id === updatedReport.id) {
+          return { ...report, ...updatedReport };
+        }
+        return report;
+      });
+
+      const updatedSession = { ...session, reports: updatedReports };
+
+      const updatedClientSessions = client.sessions.map((s) =>
+        s.id === Number(sessionId) ? updatedSession : s
+      );
+
+      const updatedClient = { ...client, sessions: updatedClientSessions };
+
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to update details');
+      }
+
+      const data = await response.json();
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
+
+      setReportEdit({
+        clientId: null,
+        sessionId: null,
+        reports: {},
+        edit: false,
+      });
+
+      fetchClientsDetails();
+
+      toast.warning(`report updated`, {
+        style: updateNotificationStyles,
+        icon: <FaRegEdit />,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       return data;
     } catch (error) {
       console.error(error);
@@ -266,302 +691,139 @@ export const CarServiceProvider = ({ children }) => {
     }
   };
   
-
-const deleteSession = async (clientId, sessionId, callback) => {
-  try {
-    const client = clients.find((c) => c.id === Number(clientId));
-
-    const updatedSessions = client.sessions.filter(
-      (session) => session.id !== sessionId
-    );
-
-    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...client, sessions: updatedSessions }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete session');
-    }
-
-    const data = await response.json();
-
-    setClients((prevClients) =>
-      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
-    );
-
-    toast.error(`Session deleted`, {
-      style: deleteNotificationStyles,
-      icon: <FaTrash />,
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-    callback();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-const deleteItem = async (clientId, sessionId, itemId, itemType, callback) => {
-  try {
-    const client = clients.find((c) => c.id === Number(clientId));
-    if (!client) {
-      console.error(`Client with ID ${clientId} not found`);
-      return;
-    }
-
-    const session = client.sessions.find((s) => s.id === Number(sessionId));
-    if (!session) {
-      console.error(`Session with ID ${sessionId} not found`);
-      return;
-    }
-
-    let updatedItems;
-    if (itemType === 'report') {
-      updatedItems = session.reports.filter((item) => item.id !== itemId);
-    } else if (itemType === 'detail') {
-      updatedItems = session.details.filter((item) => item.id !== itemId);
-    } else {
-      console.error(`Invalid itemType: ${itemType}`);
-      return;
-    }
-
-    const updatedSession = { ...session, [itemType + 's']: updatedItems };
-    const updatedClientSessions = client.sessions.map((s) =>
-      s.id === Number(sessionId) ? updatedSession : s
-    );
-
-    const updatedClient = { ...client, sessions: updatedClientSessions };
-
-    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedClient),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to delete ${itemType}`);
-    }
-
-    const data = await response.json();
-    setClients((prevClients) =>
-      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
-    );
-
-    toast.error(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} deleted`, {
-      style: deleteNotificationStyles,
-      icon: <FaTrash />,
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-    callback();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-const addDetail = async (clientId, sessionId, newDetail) => {
-  try {
+  const editDetail = (clientId, sessionId, detailId, callback) => {
     const client = clients.find((c) => c.id === Number(clientId));
 
     if (!client) {
       console.error(`Client with ID ${clientId} not found`);
-      throw new Error(`Client with ID ${clientId} not found`);
+      return;
     }
 
     const session = client.sessions.find((s) => s.id === sessionId);
 
     if (!session) {
       console.error(`Session with ID ${sessionId} not found`);
-      throw new Error(`Session with ID ${sessionId} not found`);
+      return;
     }
 
-    const updatedSession = {
-      ...session,
-      details: [...(session.details || []), { id: nanoid(), ...newDetail }],
-    };
+    const detail = session.details.find((d) => d.id === detailId);
 
-    const updatedSessions = client.sessions.map((s) =>
-      s.id === sessionId ? updatedSession : s
-    );
+    if (!detail) {
+      console.error(`Detail with ID ${detailId} not found`);
+      return;
+    }
 
-    const updatedClient = {
-      ...client,
-      sessions: updatedSessions,
-    };
-
-    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedClient),
+    setDetailEdit({
+      clientId: client.id,
+      sessionId: session.id,
+      detail,
+      edit: true,
     });
+    callback();
+  };
 
-    if (!response.ok) {
-      throw new Error('Failed to add detail');
-    }
-
-    const data = await response.json();
-
-    try {
-      setClients((prevClients) =>
-        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
-      );
-    } catch (error) {
-      console.error('Error updating clients on the client side:', error);
-    }
-
-    toast.success(`Detail added`, {
-      style: addNotificationStyles,
-      icon: <FaRegCheckCircle />,
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-
-
-const updateDetails = async (clientId, sessionId, updatedDetail, fetchClientsDetails) => {
-  try {
+  const editReport = (clientId, sessionId, reportId, callback) => {
     const client = clients.find((c) => c.id === Number(clientId));
+
     if (!client) {
       console.error(`Client with ID ${clientId} not found`);
       return;
     }
 
-    const session = client.sessions.find((s) => s.id === Number(sessionId));
+    const session = client.sessions.find((s) => s.id === sessionId);
+
     if (!session) {
       console.error(`Session with ID ${sessionId} not found`);
       return;
     }
 
-    const updatedDetails = session.details.map((detail) => {
-      if (detail.id === updatedDetail.id) {
-        return { ...detail, ...updatedDetail };
-      }
-      return detail;
-    });
+    const report = session.reports.find((r) => r.id === reportId);
 
-    const updatedSession = { ...session, details: updatedDetails };
-
-    const updatedClientSessions = client.sessions.map((s) =>
-      s.id === Number(sessionId) ? updatedSession : s
-    );
-
-    const updatedClient = { ...client, sessions: updatedClientSessions };
-
-    const response = await fetch(`http://localhost:5000/clients/${clientId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedClient),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update details');
+    if (!report) {
+      console.error(`Report with ID ${reportId} not found`);
+      return;
     }
 
-    const data = await response.json();
-    setClients((prevClients) =>
-      prevClients.map((item) => (item.id === Number(clientId) ? data : item))
-    );
-
-    setDetailEdit({
-      clientId: null,
-      sessionId: null,
-      details: {},
-      edit: false,
+    setReportEdit({
+      clientId: client.id,
+      sessionId: session.id,
+      report,
+      edit: true,
     });
 
-    fetchClientsDetails();
+    callback();
+  };
 
-    toast.warning(`Detail updated`, {
-      style: updateNotificationStyles,
-      icon: <FaRegEdit />,
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  const addReport = async (clientId, sessionId, newReport) => {
+    try {
+      const client = clients.find((c) => c.id === Number(clientId));
 
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+      if (!client) {
+        console.error(`Client with ID ${clientId} not found`);
+        return;
+      }
 
-const editDetail = (clientId, sessionId, detailId, callback) => {
-  const client = clients.find((c) => c.id === Number(clientId));
+      const updatedClient = {
+        ...client,
+        sessions: client.sessions.map((session) =>
+          session.id === Number(sessionId)
+            ? {
+                ...session,
+                reports: [
+                  ...(session.reports || []),
+                  { id: nanoid(), ...newReport },
+                ],
+              }
+            : session
+        ),
+      };
 
-  if (!client) {
-    console.error(`Client with ID ${clientId} not found`);
-    return;
-  }
+      const response = await fetch(
+        `http://localhost:5000/clients/${clientId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedClient),
+        }
+      );
 
-  const session = client.sessions.find((s) => s.id === sessionId);
+      if (!response.ok) {
+        throw new Error('Failed to add report');
+      }
 
-  if (!session) {
-    console.error(`Session with ID ${sessionId} not found`);
-    return;
-  }
+      const data = await response.json();
 
-  const detail = session.details.find((d) => d.id === detailId);
+      console.log('Updated data:', data);
 
-  if (!detail) {
-    console.error(`Detail with ID ${detailId} not found`);
-    return;
-  }
+      setClients((prevClients) =>
+        prevClients.map((item) => (item.id === Number(clientId) ? data : item))
+      );
 
-  setDetailEdit({
-    clientId: client.id,
-    sessionId: session.id,
-    detail,
-    edit: true,
-  });
-  callback()
-};
+      toast.success(`Report added`, {
+        style: addNotificationStyles,
+        icon: <FaRegCheckCircle />,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
 
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
-const scrollDuration = 500;
+  const scrollDuration = 500;
 
   const editClient = (client) => {
     scroll.scrollToTop({
-      duration: scrollDuration
+      duration: scrollDuration,
     });
     setClientEdit({
       client,
@@ -606,6 +868,16 @@ const scrollDuration = 500;
     return filteredSessions;
   };
 
+  const useToggle = (modalOpen = false) => {
+    const [isOpen, setIsOpen] = useState(modalOpen);
+    const open = () => setIsOpen(true);
+    const close = () => setIsOpen(false);
+    const toggle = () => setIsOpen(!isOpen);
+  
+    return { isOpen, open, close, toggle };
+  };
+  
+
   return (
     <UserContext.Provider
       value={{
@@ -616,6 +888,7 @@ const scrollDuration = 500;
         filterSessions,
         sessionEdit,
         detailEdit,
+        reportEdit,
         setSessionEdit,
         changeFilter,
         changeSessionFilter,
@@ -626,11 +899,15 @@ const scrollDuration = 500;
         deleteItem,
         addDetail,
         updateDetails,
+        updateReport,
+        addReport,
         editClient,
         editDetail,
+        editReport,
         updateSessions,
         addSession,
         deleteSession,
+        useToggle
       }}
     >
       {children}

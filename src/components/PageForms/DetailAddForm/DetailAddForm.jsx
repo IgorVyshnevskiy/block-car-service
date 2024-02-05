@@ -68,7 +68,7 @@ function DetailAddForm({ fetchClientsDetails }) {
   };
 
   return (
-    <form className={css.formContainer} onSubmit={submitDetail}>
+    <form className={`${css.formContainer} ${css.detailContainer}`} onSubmit={submitDetail}>
       <h2 className={css.formTitle}>ДОБАВИТИ ЗАПЧАСТИНУ</h2>
       <div className={css.formGroup}>
         <input
@@ -78,6 +78,7 @@ function DetailAddForm({ fetchClientsDetails }) {
           value={detail}
           placeholder='запчастина'
           autoComplete='off'
+          required
           onChange={onHandleChange}
         />
         <label className={css.labelField}>запчастина</label>
@@ -91,6 +92,7 @@ function DetailAddForm({ fetchClientsDetails }) {
             value={mechPrice}
             placeholder='ціна за роботу'
             autoComplete='off'
+            required
             onChange={onHandleChange}
           />
           <label className={css.labelField}>ціна за роботу</label>
@@ -103,6 +105,7 @@ function DetailAddForm({ fetchClientsDetails }) {
             value={detailPrice}
             placeholder='ціна за запчастину'
             autoComplete='off'
+            required
             onChange={onHandleChange}
           />
           <label className={css.labelField}>ціна за запчастину</label>

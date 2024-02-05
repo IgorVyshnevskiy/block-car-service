@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import css from './DetailListItem.module.css';
 import { BsTools } from 'react-icons/bs';
 import Button from '../../Button/Button';
@@ -6,12 +6,14 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import UserContext from '../../../context/userContext';
 import { useParams } from 'react-router-dom';
 import { animateScroll as scroll } from 'react-scroll';
+import DeleteModal from '../../DeleteModal';
 
 function DetailItem({ detailItem, fetchClientDetails }) {
   const { editDetail, deleteItem } = useContext(UserContext);
   const { clientId, sessionId } = useParams();
 
   const scrollDuration = 500;
+  const [isModalVisible, setIsModalVisible] = useState(false);
   
   const handleEditClick = (e) => {
     e.stopPropagation();
@@ -22,17 +24,37 @@ function DetailItem({ detailItem, fetchClientDetails }) {
   
     editDetail(Number(clientId),Number(sessionId), detailItem.id, fetchClientDetails);
   };
-  
+
   const handleDeleteClick = (e) => {
     e.stopPropagation();
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setIsModalVisible(false);
     deleteItem(
       clientId,
       sessionId,
       detailItem.id,
       'detail',
       fetchClientDetails
-    );
+    );;
   };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
+  };
+  
+  // const handleDeleteClick = (e) => {
+  //   e.stopPropagation();
+  //   deleteItem(
+  //     clientId,
+  //     sessionId,
+  //     detailItem.id,
+  //     'detail',
+  //     fetchClientDetails
+  //   );
+  // };
 
   if (!detailItem) {
     return <p>Detail is undefined</p>;
@@ -81,6 +103,14 @@ function DetailItem({ detailItem, fetchClientDetails }) {
           styleName={'deleteBtn'}
         />
       </div>
+      {isModalVisible && (
+        <DeleteModal
+          onConfirm={handleConfirmDelete}
+          onClose={handleCancelDelete}
+          deleteName={'запчастину'}
+          isOpen={isModalVisible}
+        />
+      )}
     </li>
   );
 }

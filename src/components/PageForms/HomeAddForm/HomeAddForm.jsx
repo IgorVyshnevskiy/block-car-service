@@ -82,6 +82,7 @@ function HomeAddForm() {
             value={owner}
             placeholder='імʼя'
             onChange={onHandleChange}
+            required
             autoComplete="off"
           />
           <label htmlFor='ownerField' className={css.labelField}>
@@ -97,6 +98,7 @@ function HomeAddForm() {
             placeholder='номер телефону'
             onChange={onHandleChange}
             autoComplete="off"
+            required
           />
           <label htmlFor='phoneField' className={css.labelField}>номер телефону</label>
         </div>
@@ -109,6 +111,7 @@ function HomeAddForm() {
             placeholder='авто'
             onChange={onHandleChange}
             autoComplete="off"
+            required
           />
           <label htmlFor='carField' className={css.labelField}>авто</label>
         </div>
@@ -121,6 +124,7 @@ function HomeAddForm() {
             placeholder='пробіг'
             onChange={onHandleChange}
             autoComplete="off"
+            required
           />
           <label htmlFor='mileageField' className={css.labelField}>пробіг</label>
         </div>

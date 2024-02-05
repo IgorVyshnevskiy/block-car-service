@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { RiFileExcel2Line } from "react-icons/ri";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,8 +9,10 @@ import DateContainer from '../../DateContainer/DateContainer';
 import { animateScroll as scroll } from 'react-scroll';
 import * as XLSX from 'xlsx';
 import TotalPriceTag from '../../TotalPriceTag';
+import DeleteModal from '../../DeleteModal';
 
 function SessionItem({ details, fetchClientDetails }) {
+  
   const { clientId } = useParams();
   const { setSessionEdit, deleteSession } = useContext(UserContext);
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ function SessionItem({ details, fetchClientDetails }) {
     navigate(`/clients/${clientId}/session/${details.id}`);
   };
   const scrollDuration = 500;
+  const [isModalVisible, setIsModalVisible] = useState(false);
   
   const handleEditClick = (e) => {
     e.stopPropagation();
@@ -36,7 +39,16 @@ function SessionItem({ details, fetchClientDetails }) {
 
   const handleDeleteClick = (e) => {
     e.stopPropagation();
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setIsModalVisible(false);
     deleteSession(clientId, details.id, fetchClientDetails);
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
   };
 
   const exportToExcel = (e) => {
@@ -64,7 +76,7 @@ function SessionItem({ details, fetchClientDetails }) {
               <span className={css.textColor}>Пробіг:</span>{' '}
               {details.sessionMileage}
             </p>
-            <TotalPriceTag details={details}/>
+            <TotalPriceTag details={details} styleName={'inlineSession'}/>
           </div>
         </div>
       </div>
@@ -100,6 +112,14 @@ function SessionItem({ details, fetchClientDetails }) {
           styleName={'deleteBtn'}
         />
       </div>
+      {isModalVisible && (
+        <DeleteModal
+          onConfirm={handleConfirmDelete}
+          onClose={handleCancelDelete}
+          deleteName={'сеанс'}
+          isOpen={isModalVisible}
+        />
+      )}
     </li>
   );
 }

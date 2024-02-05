@@ -74,8 +74,8 @@ function SessionAddForm({ sessionFn }) {
       purpose,
       sessionMileage,
       totalPrice: 0,
-      details: sessionEdit.session.details,  // Use the existing details
-      reports: sessionEdit.session.reports,  // Use the existing reports
+      details: sessionEdit.session.details,  
+      reports: sessionEdit.session.reports,  
     };
 
     if (sessionEdit.edit) {
@@ -99,6 +99,7 @@ function SessionAddForm({ sessionFn }) {
           placeholder='дата'
           ref
           ={datePickerRef}
+          required
         />
         <label className={css.labelField}>дата</label>
       </div>
@@ -110,6 +111,7 @@ function SessionAddForm({ sessionFn }) {
           value={purpose}
           placeholder='причина звернення'
           autoComplete="off"
+          required
           onChange={onHandleChange}
         />
         <label className={css.labelField}>причина звернення</label>
@@ -122,6 +124,7 @@ function SessionAddForm({ sessionFn }) {
           value={sessionMileage}
           placeholder='пробіг'
           autoComplete="off"
+          required
           onChange={onHandleChange}
         />
         <label className={css.labelField}>пробіг</label>

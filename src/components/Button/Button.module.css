@@ -40,7 +40,6 @@ button:active {
   justify-content: center;
   align-items: center;
   background-color: #3c7c50;
-  /* color: white; */
   margin-right: 1.2rem;
   padding: 5px 14px;
   
@@ -54,6 +53,28 @@ button:active {
   color: #000;
   padding: 1.8rem 13rem;
   margin: 0 auto;
+}
+
+.modalConfirm {
+  margin-right: 1.2rem;
+  font-size: 1.8rem;
+  background-color: #a77247;
+  padding: 12px 24px;
+}
+
+.modalConfirm:hover, .modalConfirm:active {
+  background-color: #ff3d3d;
+}
+
+.modalClose {
+  background-color: #a77247;
+  font-size: 1.8rem;
+  padding: 12px 24px; 
+}
+
+.modalClose:hover, .modalClose:active {
+  background-color: orange;
+  
 }
 
 

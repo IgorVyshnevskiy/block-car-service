@@ -8,6 +8,7 @@ import DetailAddForm from '../components/PageForms/DetailAddForm';
 import ReportList from '../components/PageLists/ReportList';
 import css from './PageStyles.module.css';
 import TotalPriceTag from '../components/TotalPriceTag';
+import ReportAddForm from '../components/PageForms/ReportAddForm';
 
 function DetailPage() {
   const { clientId, sessionId } = useParams();
@@ -43,6 +44,19 @@ function DetailPage() {
     navigate(location.state?.from || `/clients/${clientId}`);
   };
 
+  if (!detail || !detail.date) {
+    return;
+  }
+  const ukraineDateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Europe/Kiev',
+  };
+
+
+  const formattedDate = new Date(detail.date).toLocaleDateString('uk-UA', ukraineDateOptions);
+
   return (
     <PageCard>
       <Header title={'Block car'} />
@@ -52,11 +66,12 @@ function DetailPage() {
         <div>
           <div className={css.detailBlockSession}>
             <p className={css.detailPurpose}><span className={css.textColor}>Причина звернення:</span> {detail.purpose}</p>
-            <p className={css.detailDate}><span className={css.textColor}>Дата: </span>{detail.date}</p>
+            <p className={css.detailDate}><span className={css.textColor}>Дата: </span>{formattedDate}</p>
           </div>
           <DetailAddForm fetchClientsDetails={fetchClientDetails}/>
+          <ReportAddForm fetchClientsDetails={fetchClientDetails} />
           <DetailsList details={detail} fetchClientsDetails={fetchClientDetails}/>
-          <TotalPriceTag details={detail}/>
+          <TotalPriceTag details={detail} styleName={'componentDetail'}/>
           <ReportList details={detail} fetchClientsDetails={fetchClientDetails}/>
         </div>
       ) : (

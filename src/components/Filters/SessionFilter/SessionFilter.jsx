@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import UserContext from '../../../context/userContext';
 import { IoMdSearch } from 'react-icons/io';
-import css from './../Filter/Filter.module.css';
+import css from './../Filter.module.css';
 
 const SessionFilter = () => {
   const { changeSessionFilter } = useContext(UserContext);
