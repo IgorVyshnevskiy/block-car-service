@@ -44,15 +44,23 @@ function SessionAddForm({ sessionFn }) {
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
+    let parsedValue = value;
+    if (name === 'sessionMileageField') {
+      if (isNaN(value)) {
+        return
+      } else {
+        parsedValue = Number(value);
+      }
+    }
     switch (name) {
       case 'dateField':
-        setDate(value);
+        setDate(parsedValue);
         break;
       case 'purposeField':
-        setPurpose(value);
+        setPurpose(parsedValue);
         break;
       case 'sessionMileageField':
-        setSessionMileage(Number(value));
+        setSessionMileage(Number(parsedValue));
         break;
       default:
         return;
@@ -125,6 +133,7 @@ function SessionAddForm({ sessionFn }) {
           type='text'
           name='sessionMileageField'
           value={sessionMileage}
+          maxLength={7}
           placeholder='пробіг'
           autoComplete="off"
           required

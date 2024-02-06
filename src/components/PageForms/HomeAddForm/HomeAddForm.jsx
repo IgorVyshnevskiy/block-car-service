@@ -21,19 +21,28 @@ function HomeAddForm() {
   }, [clientEdit]);
 
   const onHandleChange = (e) => {
+   
     const { name, value } = e.target;
+    let parsedValue = value;
+    if (name === 'phoneField' || name === 'mileageField') {
+      if (isNaN(value)) {
+        return
+      } else {
+        parsedValue = Number(value);
+      }
+    }
     switch (name) {
       case 'ownerField':
-        setOwner(value);
+        setOwner(parsedValue);
         break;
       case 'phoneField':
-        setPhone(value);
+        setPhone(parsedValue);
         break;
       case 'carField':
-        setCar(value);
+        setCar(parsedValue);
         break;
       case 'mileageField':
-        setMileage(value);
+        setMileage(parsedValue);
         break;
       default:
         return;
@@ -95,6 +104,7 @@ function HomeAddForm() {
             type='text'
             name='phoneField'
             value={phone}
+            maxLength={15}
             placeholder='номер телефону'
             onChange={onHandleChange}
             autoComplete="off"
@@ -120,6 +130,7 @@ function HomeAddForm() {
             className={css.inputField}
             type='text'
             name='mileageField'
+            maxLength={7}
             value={mileage}
             placeholder='пробіг'
             onChange={onHandleChange}

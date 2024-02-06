@@ -1,3 +1,22 @@
 {
-  "clients": []
+  "clients": [
+    {
+      "owner": "1",
+      "phone": 444444444444444,
+      "car": "3",
+      "mileage": 1,
+      "sessions": [
+        {
+          "id": 1,
+          "date": "2024-02-07T22:00:00.000Z",
+          "purpose": "1",
+          "sessionMileage": 1,
+          "totalPrice": 0,
+          "details": [],
+          "reports": []
+        }
+      ],
+      "id": 1
+    }
+  ]
 }

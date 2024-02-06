@@ -20,15 +20,23 @@ function DetailAddForm({ fetchClientsDetails }) {
   }, [detailEdit]);
   const onHandleChange = (e) => {
     const { name, value } = e.target;
+    let parsedValue = value;
+    if (name === 'mechPriceField' || name === 'detailPriceField') {
+      if (isNaN(value)) {
+        return
+      } else {
+        parsedValue = Number(value);
+      }
+    }
     switch (name) {
       case 'detailField':
-        setDetail(value);
+        setDetail(parsedValue);
         break;
       case 'mechPriceField':
-        setMechPrice(Number(value));
+        setMechPrice(parsedValue); 
         break;
       case 'detailPriceField':
-        setDetailPrice(Number(value));
+        setDetailPrice(parsedValue); 
         break;
       default:
         return;
@@ -90,6 +98,7 @@ function DetailAddForm({ fetchClientsDetails }) {
             type='text'
             name='mechPriceField'
             value={mechPrice}
+            maxLength={7}
             placeholder='ціна за роботу'
             autoComplete='off'
             required
@@ -103,6 +112,7 @@ function DetailAddForm({ fetchClientsDetails }) {
             type='text'
             name='detailPriceField'
             value={detailPrice}
+            maxLength={7}
             placeholder='ціна за запчастину'
             autoComplete='off'
             required
