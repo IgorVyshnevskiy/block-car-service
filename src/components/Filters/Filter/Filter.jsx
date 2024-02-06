@@ -13,6 +13,7 @@ const Filter = () => {
         <IoMdSearch className={css.searchIcon} />
         <input className={css.filterInput}
           type='text'
+          name='clientFilter'
           onChange={changeFilter}
           placeholder="пошук..."
         />

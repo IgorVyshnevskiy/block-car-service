@@ -45,6 +45,9 @@ function SessionAddForm({ sessionFn }) {
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
+      case 'dateField':
+        setDate(value);
+        break;
       case 'purposeField':
         setPurpose(value);
         break;

@@ -105,7 +105,7 @@ function ReportAddForm({ fetchClientsDetails }) {
           />
           <label htmlFor='medium' className={css.radioLabel}>
             <div className={css.radioBtn}></div>
-            Ближайщий час
+            Ближайший час
           </label>
 
           <input

@@ -10,10 +10,11 @@ const modalRoot = document.querySelector('#modal-root');
 function DeleteModal({ onConfirm, onClose, deleteName, isOpen }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.code !== 'Escape') {
-        return;
+      if (event.code === 'Enter' || event.code === 'Space') {
+        onConfirm();
+      } else if (event.code === 'Escape') {
+        onClose();
       }
-      onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
 
@@ -24,7 +25,7 @@ function DeleteModal({ onConfirm, onClose, deleteName, isOpen }) {
 
   const handleBackdropClick = (event) => {
     event.stopPropagation(); 
-    
+
     if (event.target === event.currentTarget) {
       onClose();
     }

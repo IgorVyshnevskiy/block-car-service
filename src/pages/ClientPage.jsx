@@ -57,12 +57,14 @@ function ClientPage() {
             </div>
           </div>
           <SessionAddForm sessionFn={fetchClientDetails} />
-          <SessionFilter />
+          {client.sessions.length > 0 && <><SessionFilter />
+          
           <SessionList
             sessions={client}
             fetchClientDetails={fetchClientDetails}
             clientId={clientId}
           />
+          </>}
         </div>
       ) : (
         <p>Loading...</p>

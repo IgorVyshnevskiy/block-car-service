@@ -6,30 +6,22 @@ import UserContext from '../../../context/userContext';
 import Button from '../../Button/Button';
 import css from './SessionItem.module.css';
 import DateContainer from '../../DateContainer/DateContainer';
-import { animateScroll as scroll } from 'react-scroll';
-import * as XLSX from 'xlsx';
 import TotalPriceTag from '../../TotalPriceTag';
 import DeleteModal from '../../DeleteModal';
+import ExcelJS from 'exceljs'; // Importing exceljs
 
 function SessionItem({ details, fetchClientDetails }) {
-  
   const { clientId } = useParams();
   const { setSessionEdit, deleteSession } = useContext(UserContext);
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleNavigate = () => {
     navigate(`/clients/${clientId}/session/${details.id}`);
   };
-  const scrollDuration = 500;
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  
+
   const handleEditClick = (e) => {
     e.stopPropagation();
-
-    scroll.scrollToTop({
-      duration: scrollDuration
-    });
-
     setSessionEdit({
       clientId,
       session: details,
@@ -51,20 +43,70 @@ function SessionItem({ details, fetchClientDetails }) {
     setIsModalVisible(false);
   };
 
-  const exportToExcel = (e) => {
-    e.stopPropagation();
-    const ws = XLSX.utils.json_to_sheet([details]);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'SessionDetails');
-    XLSX.writeFile(wb, `SessionDetails_${details.id}.xlsx`);
-  };
+  const exportToExcel = async () => {
+    if (!details || !details.details || details.details.length === 0 || !details.reports || details.reports.length === 0) {
+      console.error("No session details or reports available.");
+      return;
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('SessionDetails');
+
+    // Add headers for details
+    worksheet.addRow(['Дата', 'Причина звернення', 'Пробіг авто', 'Загальна сума', 'Запчастина', 'Сума за запчастину']);
+
+    // Calculate total price as sum of combine prices
+    let totalPrice = 0;
+    details.details.forEach(detail => {
+      totalPrice += detail.combinePrice;
+    });
+
+    // Format date as DD.MM.YYYY
+    const formattedDate = new Date(details.date);
+    const day = formattedDate.getDate().toString().padStart(2, '0');
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = formattedDate.getFullYear();
+    const formattedDateString = `${day}.${month}.${year}`;
+
+    // Add session details
+    details.details.forEach(detail => {
+      worksheet.addRow([
+        formattedDateString,
+        details.purpose,
+        details.sessionMileage,
+        totalPrice,
+        detail.detail,
+        detail.combinePrice
+      ]);
+    });
+
+    // Add headers for reports
+    worksheet.addRow(['Зауваження', 'Рекомендований час для вирішення']);
+
+    // Add reports
+    details.reports.forEach(report => {
+      worksheet.addRow([
+        report.report,
+        report.difficulty
+      ]);
+    });
+
+    // Generate Excel file
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `SessionDetails_${details.id}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+};
+
+
 
   return (
-    <li
-      key={details.id}
-      onClick={handleNavigate}
-      className={css.clientListItem}
-    >
+    <li key={details.id} onClick={handleNavigate} className={css.clientListItem}>
       <div className={css.sessionWrapper}>
         <DateContainer date={details.date} />
         <div className={css.infoBlock}>
@@ -81,7 +123,6 @@ function SessionItem({ details, fetchClientDetails }) {
         </div>
       </div>
       <div className={css.ClientBtnWrapper}>
-
         <Button
           onClick={exportToExcel}
           label={

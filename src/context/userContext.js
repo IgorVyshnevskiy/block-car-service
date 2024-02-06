@@ -28,6 +28,8 @@ let sessionCounter = 1;
 export const CarServiceProvider = ({ children }) => {
   const [filter, setFilter] = useState('');
   const [sessionFilter, setSessionFilter] = useState('');
+  const [detailFilter, setDetailFilter] = useState('');
+  const [reportFilter, setReportFilter] = useState('');
 
   const [clients, setClients] = useState([]);
 
@@ -68,7 +70,7 @@ export const CarServiceProvider = ({ children }) => {
   const deleteClient = async (id) => {
     await fetch(`http://localhost:5000/clients/${id}`, { method: 'DELETE' });
     setClients(clients.filter((item) => item.id !== id));
-    toast.error(`Contact deleted`, {
+    toast.error(`Клієнта видалено`, {
       style: deleteNotificationStyles,
       icon: <FaTrash />,
       autoClose: 2000,
@@ -92,7 +94,7 @@ export const CarServiceProvider = ({ children }) => {
     const data = await response.json();
 
     setClients([data, ...clients]);
-    toast.success(`Contact added`, {
+    toast.success(`Клієнта додано`, {
       style: addNotificationStyles,
       icon: <FaRegCheckCircle />,
       autoClose: 2000,
@@ -129,7 +131,7 @@ export const CarServiceProvider = ({ children }) => {
         client: {},
         edit: false,
       });
-      toast.warning(`Contact updated`, {
+      toast.warning(`Клієнта обновлено`, {
         style: updateNotificationStyles,
         icon: <FaRegEdit />,
         autoClose: 2000,
@@ -188,7 +190,7 @@ export const CarServiceProvider = ({ children }) => {
         edit: false,
       });
       callback();
-      toast.warning(`Session updated`, {
+      toast.warning(`Сеанс обновлено`, {
         style: updateNotificationStyles,
         icon: <FaRegEdit />,
         autoClose: 2000,
@@ -225,10 +227,9 @@ export const CarServiceProvider = ({ children }) => {
       }
   
       const sessionMileage = newSession.sessionMileage || 0;
-  
-      // Check if the sessionMileage is greater than the current mileage of the client
+      
       if (sessionMileage > client.mileage) {
-        // Update the client's mileage with the sessionMileage
+      
         const updatedClient = {
           ...client,
           mileage: sessionMileage,
@@ -262,7 +263,7 @@ export const CarServiceProvider = ({ children }) => {
           prevClients.map((item) => (item.id === Number(id) ? data : item))
         );
   
-        toast.success(`Session added`, {
+        toast.success(`Сеанс додано`, {
           style: addNotificationStyles,
           icon: <FaRegCheckCircle />,
           autoClose: 2000,
@@ -275,7 +276,6 @@ export const CarServiceProvider = ({ children }) => {
   
         return data;
       } else {
-        // If sessionMileage is not greater, proceed with the existing logic
         const updatedClient = {
           ...client,
           sessions: [
@@ -308,7 +308,7 @@ export const CarServiceProvider = ({ children }) => {
           prevClients.map((item) => (item.id === Number(id) ? data : item))
         );
   
-        toast.success(`Session added`, {
+        toast.success(`Сеанс додано`, {
           style: addNotificationStyles,
           icon: <FaRegCheckCircle />,
           autoClose: 2000,
@@ -356,7 +356,7 @@ export const CarServiceProvider = ({ children }) => {
         prevClients.map((item) => (item.id === Number(clientId) ? data : item))
       );
 
-      toast.error(`Session deleted`, {
+      toast.error(`Сеанс видалено`, {
         style: deleteNotificationStyles,
         icon: <FaTrash />,
         autoClose: 2000,
@@ -433,8 +433,11 @@ export const CarServiceProvider = ({ children }) => {
         prevClients.map((item) => (item.id === Number(clientId) ? data : item))
       );
 
+      const itemTypeText = itemType === 'report' ? 'Зауваження' : 'Запчастину';
+
       toast.error(
-        `${itemType.charAt(0).toUpperCase() + itemType.slice(1)} deleted`,
+          `${itemTypeText} видалено`,
+
         {
           style: deleteNotificationStyles,
           icon: <FaTrash />,
@@ -512,7 +515,7 @@ export const CarServiceProvider = ({ children }) => {
         console.error('Error updating clients on the client side:', error);
       }
 
-      toast.success(`Detail added`, {
+      toast.success(`Запчастину додано`, {
         style: addNotificationStyles,
         icon: <FaRegCheckCircle />,
         autoClose: 2000,
@@ -593,7 +596,7 @@ export const CarServiceProvider = ({ children }) => {
 
       fetchClientsDetails();
 
-      toast.warning(`Detail updated`, {
+      toast.warning(`Запчастину обновлено`, {
         style: updateNotificationStyles,
         icon: <FaRegEdit />,
         autoClose: 2000,
@@ -673,7 +676,7 @@ export const CarServiceProvider = ({ children }) => {
 
       fetchClientsDetails();
 
-      toast.warning(`report updated`, {
+      toast.warning(`Зауваження обновлено`, {
         style: updateNotificationStyles,
         icon: <FaRegEdit />,
         autoClose: 2000,
@@ -795,13 +798,13 @@ export const CarServiceProvider = ({ children }) => {
 
       const data = await response.json();
 
-      console.log('Updated data:', data);
+  
 
       setClients((prevClients) =>
         prevClients.map((item) => (item.id === Number(clientId) ? data : item))
       );
 
-      toast.success(`Report added`, {
+      toast.success(`Зауваження додано`, {
         style: addNotificationStyles,
         icon: <FaRegCheckCircle />,
         autoClose: 2000,
@@ -832,13 +835,25 @@ export const CarServiceProvider = ({ children }) => {
   };
 
   const changeFilter = (e) => {
-    const { value } = e.target;
-    setFilter(value);
+    const { name, value } = e.target;
+    switch (name) {
+      case 'clientFilter':
+        setFilter(value);
+        break;
+      case 'sessionFilter':
+        setSessionFilter(value);
+        break;
+      case 'detailFilter':
+        setDetailFilter(value);
+        break;
+      case 'reportFilter':
+        setReportFilter(value);
+        break;
+      default:
+        break;
+    }
   };
-  const changeSessionFilter = (e) => {
-    const { value } = e.target;
-    setSessionFilter(value);
-  };
+
 
   const filterUsers = () => {
     const normalizedFilter = filter.toLowerCase();
@@ -868,15 +883,58 @@ export const CarServiceProvider = ({ children }) => {
     return filteredSessions;
   };
 
-  const useToggle = (modalOpen = false) => {
-    const [isOpen, setIsOpen] = useState(modalOpen);
-    const open = () => setIsOpen(true);
-    const close = () => setIsOpen(false);
-    const toggle = () => setIsOpen(!isOpen);
+  const filterDetails = (clientId, sessionId) => {
+    const normalizedFilter = detailFilter.toLowerCase();
+    if (!clientId || !sessionId) {
+      return [];
+    }
   
-    return { isOpen, open, close, toggle };
+    const client = clients.find((c) => c.id === Number(clientId));
+  
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      return [];
+    }
+  
+    const session = client.sessions.find((s) => s.id === Number(sessionId));
+  
+    if (!session) {
+      console.error(`Session with ID ${sessionId} not found`);
+      return [];
+    }
+
+    const filteredDetails = (session.details || []).filter((detail) =>
+    detail.detail.toLowerCase().includes(normalizedFilter)
+  );
+  
+    return filteredDetails;
   };
+  const filterReports = (clientId, sessionId) => {
+    const normalizedFilter = reportFilter.toLowerCase();
+    if (!clientId || !sessionId) {
+      return [];
+    }
   
+    const client = clients.find((c) => c.id === Number(clientId));
+  
+    if (!client) {
+      console.error(`Client with ID ${clientId} not found`);
+      return [];
+    }
+  
+    const session = client.sessions.find((s) => s.id === Number(sessionId));
+  
+    if (!session) {
+      console.error(`Session with ID ${sessionId} not found`);
+      return [];
+    }
+
+    const filteredReports = (session.reports || []).filter((report) =>
+    report.report.toLowerCase().includes(normalizedFilter)
+  );
+  
+    return filteredReports;
+  };
 
   return (
     <UserContext.Provider
@@ -886,12 +944,13 @@ export const CarServiceProvider = ({ children }) => {
         isLoading,
         filterdClients,
         filterSessions,
+        filterDetails,
+        filterReports,
         sessionEdit,
         detailEdit,
         reportEdit,
         setSessionEdit,
         changeFilter,
-        changeSessionFilter,
         addClient,
         deleteClient,
         fetchClients,
@@ -907,7 +966,6 @@ export const CarServiceProvider = ({ children }) => {
         updateSessions,
         addSession,
         deleteSession,
-        useToggle
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { IoMdSearch } from 'react-icons/io';
 import css from './../Filter.module.css';
 
 const SessionFilter = () => {
-  const { changeSessionFilter } = useContext(UserContext);
+  const { changeFilter } = useContext(UserContext);
 
   return (
     <div className={css.filterContainer}>
@@ -13,7 +13,8 @@ const SessionFilter = () => {
         <IoMdSearch className={css.searchIcon} />
         <input className={css.filterInput}
           type='text'
-          onChange={changeSessionFilter}
+          name='sessionFilter'
+          onChange={changeFilter}
           placeholder="пошук..."
         />
       </div>

@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../context/userContext';
 import Button from '../../Button/Button';
-import DeleteModal from '../../DeleteModal'; // Import the DeleteModal component
+import DeleteModal from '../../DeleteModal';
 import css from './ClientItem.module.css';
 
 function ClientItem({ client }) {
@@ -70,7 +70,7 @@ function ClientItem({ client }) {
         <DeleteModal
           onConfirm={handleConfirmDelete}
           onClose={handleCancelDelete}
-          deleteName={client.owner} // Pass the client owner name to the modal
+          deleteName={client.owner} 
           isOpen={isModalVisible}
         />
       )}
