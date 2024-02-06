@@ -21,7 +21,7 @@ function DeleteModal({ onConfirm, onClose, deleteName, isOpen }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onClose]);
+  }, [onClose, onConfirm]);
 
   const handleBackdropClick = (event) => {
     event.stopPropagation(); 

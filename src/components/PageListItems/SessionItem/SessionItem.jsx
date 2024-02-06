@@ -43,7 +43,8 @@ function SessionItem({ details, fetchClientDetails }) {
     setIsModalVisible(false);
   };
 
-  const exportToExcel = async () => {
+  const exportToExcel = async (e) => {
+    e.stopPropagation();
     if (!details || !details.details || details.details.length === 0 || !details.reports || details.reports.length === 0) {
       console.error("No session details or reports available.");
       return;
@@ -118,7 +119,7 @@ function SessionItem({ details, fetchClientDetails }) {
               <span className={css.textColor}>Пробіг:</span>{' '}
               {details.sessionMileage}
             </p>
-            <TotalPriceTag details={details} styleName={'inlineSession'}/>
+            <TotalPriceTag details={details} styleName={'inlineSession'} spanText={'Загальна сума'} priceType={'combinePrice'}/>
           </div>
         </div>
       </div>

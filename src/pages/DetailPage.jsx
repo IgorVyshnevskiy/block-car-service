@@ -89,7 +89,11 @@ function DetailPage() {
                 details={detail}
                 fetchClientsDetails={fetchClientDetails}
               />
-              <TotalPriceTag details={detail} styleName={'componentDetail'} />
+              <div className={css.priceTagContainer}> 
+              <TotalPriceTag details={detail} styleName={'componentDetail'} spanText={'Зв роботу'} priceType={'mechPrice'}/>
+              <TotalPriceTag details={detail} styleName={'componentDetail'} spanText={'За деталі'} priceType={'detailPrice'}/>
+              <TotalPriceTag details={detail} styleName={'componentDetail'} spanText={'Загальна сума'} priceType={'combinePrice'}/>
+              </div>
             </>
           )}
           {detail.reports.length > 0 && (
